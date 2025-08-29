@@ -1,1 +1,62 @@
 
+**contenido/tema3_persona.html**
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 3: Factor Humano - Hispano Körkort</title>
+    <link rel="stylesheet" href="../../recursos/estilos/base.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../inicio.html" class="nav-logo">Hispano Körkort</a>
+            <div class="nav-menu">
+                <a href="../../practica.html">Prácticas</a>
+                <a href="../indice.html">Teoría</a>
+                <a href="../../catalogo_senales/portada.html">Señales</a>
+                <a href="../../autoescuelas/listado.html">Autoescuelas</a>
+                <button id="btnLogout" class="btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+    <main class="theory-container">
+        <article class="theory-content">
+            <h1>Factor Humano</h1>
+            <div class="progress-indicator">
+                <span>Progreso: <span id="progress-value">0%</span></span>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+            <section>
+                <h2>El conductor y su estado</h2>
+                <p>El estado físico y mental del conductor es crucial para la seguridad vial.</p>
+                
+                <h3>Fatiga y sueño</h3>
+                <p>Conducir cansado o con sueño reduce los reflejos y la atención.</p>
+                
+                <h3>Estrés y emociones</h3>
+                <p>Las emociones fuertes pueden afectar negativamente la conducción.</p>
+            </section>
+            <section>
+                <h2>Alcohol y drogas</h2>
+                <p>El consumo de sustancias afecta gravemente la capacidad de conducir.</p>
+                
+                <h3>Límites legales</h3>
+                <p>En Suecia, el límite de alcohol en sangre es 0.2 promille.</p>
+                
+                <h3>Consecuencias</h3>
+                <p>Multas, retirada de licencia y penas de prisión por exceso.</p>
+            </section>
+            <div class="theory-actions">
+                <button id="markComplete" class="btn-primary">Marcar como completado</button>
+                <button id="takeQuiz" class="btn-accent">Realizar test del tema</button>
+            </div>
+        </article>
+    </main>
+    <script type="module" src="../../recursos/scripts/teoria.js"></script>
+</body>
+</html>

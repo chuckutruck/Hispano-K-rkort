@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Hispano Körkort</title>
+    <link rel="stylesheet" href="../../recursos/estilos/base.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../inicio.html" class="nav-logo">Hispano Körkort</a>
+            <div class="nav-menu">
+                <a href="../../practica.html">Prácticas</a>
+                <a href="../../contenido/indice.html">Teoría</a>
+                <a href="../../catalogo_senales/portada.html">Señales</a>
+                <a href="../../autoescuelas/listado.html">Autoescuelas</a>
+                <button id="btnLogout" class="btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
 
+    <main class="help-container">
+        <h1>Contacto y Soporte</h1>
+        
+        <div class="contact-content">
+            <div class="contact-info">
+                <h2>¿Necesitas ayuda?</h2>
+                <p>Estamos aquí para ayudarte con cualquier pregunta o problema que tengas.</p>
+                
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <h3>📧 Email</h3>
+                        <p>soporte@hispano-korkort.se</p>
+                        <p>Respuesta en 24 horas</p>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <h3>📞 Teléfono</h3>
+                        <p>+46 123 456 789</p>
+                        <p>Lunes a Viernes, 9:00-18:00</p>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <h3>💬 Chat en vivo</h3>
+                        <p>Disponible para usuarios Premium</p>
+                        <button class="btn-primary" disabled>Iniciar Chat</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <h2>Envíanos un mensaje</h2>
+                <form id="supportForm">
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Asunto</label>
+                        <select id="subject" required>
+                            <option value="">Seleccionar asunto</option>
+                            <option value="technical">Problema técnico</option>
+                            <option value="content">Consulta sobre contenido</option>
+                            <option value="billing">Problema de facturación</option>
+                            <option value="other">Otro</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Mensaje</label>
+                        <textarea id="message" rows="5" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Enviar mensaje</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="faq-preview">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3>¿Cómo restablezco mi contraseña?</h3>
+                    <p>Puedes restablecer tu contraseña desde la página de acceso haciendo clic en "¿Olvidaste tu contraseña?"</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>¿Cómo cancelo mi suscripción?</h3>
+                    <p>Puedes cancelar tu suscripción en cualquier momento desde tu panel de usuario.</p>
+                </div>
+            </div>
+            <a href="preguntas.html" class="btn-secondary">Ver todas las preguntas</a>
+        </div>
+    </main>
+
+    <script type="module" src="../../recursos/scripts/utilidades.js"></script>
+</body>
+</html>

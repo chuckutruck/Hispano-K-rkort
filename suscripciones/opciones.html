@@ -1,1 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planes de Suscripción - Hispano Körkort</title>
+    <link rel="stylesheet" href="../../recursos/estilos/base.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../inicio.html" class="nav-logo">Hispano Körkort</a>
+            <div class="nav-menu">
+                <a href="../../practica.html">Prácticas</a>
+                <a href="../../contenido/indice.html">Teoría</a>
+                <a href="../../catalogo_senales/portada.html">Señales</a>
+                <a href="../../autoescuelas/listado.html">Autoescuelas</a>
+                <button id="btnLogout" class="btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
 
+    <main class="subscription-container">
+        <h1>Planes de Suscripción</h1>
+        <p>Elige el plan que mejor se adapte a tus necesidades de aprendizaje</p>
+        
+        <div class="plans-grid" id="plans-container">
+            <div class="plan-card" data-plan="basico">
+                <h3>Plan Básico</h3>
+                <div class="plan-price">99 SEK/mes</div>
+                <ul class="plan-features">
+                    <li>Acceso completo a teoría</li>
+                    <li>10 tests de práctica mensuales</li>
+                    <li>Soporte por email</li>
+                    <li>Progreso básico de aprendizaje</li>
+                </ul>
+                <button class="btn-primary">Seleccionar Plan</button>
+            </div>
+            
+            <div class="plan-card featured" data-plan="premium">
+                <div class="plan-badge">Recomendado</div>
+                <h3>Plan Premium</h3>
+                <div class="plan-price">199 SEK/mes</div>
+                <ul class="plan-features">
+                    <li>Todos los beneficios del plan Básico</li>
+                    <li>Tests ilimitados</li>
+                    <li>Simulacros de examen reales</li>
+                    <li>Soporte prioritario 24/7</li>
+                    <li>Acceso a estadísticas detalladas</li>
+                </ul>
+                <button class="btn-accent">Seleccionar Plan</button>
+            </div>
+            
+            <div class="plan-card" data-plan="anual">
+                <h3>Plan Anual</h3>
+                <div class="plan-price">999 SEK/año</div>
+                <div class="plan-savings">¡Ahorra 30%!</div>
+                <ul class="plan-features">
+                    <li>Todos los beneficios del plan Premium</li>
+                    <li>12 meses por el precio de 10</li>
+                    <li>Acceso a contenido exclusivo</li>
+                    <li>Certificado de finalización</li>
+                </ul>
+                <button class="btn-primary">Seleccionar Plan</button>
+            </div>
+        </div>
+        
+        <div class="payment-info">
+            <h3>Métodos de pago aceptados</h3>
+            <div class="payment-methods">
+                <div class="payment-method visa"></div>
+                <div class="payment-method mastercard"></div>
+                <div class="payment-method swish"></div>
+                <div class="payment-method banktransfer"></div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="../../recursos/scripts/planes.js"></script>
+</body>
+</html>

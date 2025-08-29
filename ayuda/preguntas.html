@@ -1,1 +1,79 @@
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas Frecuentes - Hispano Körkort</title>
+    <link rel="stylesheet" href="../../recursos/estilos/base.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../inicio.html" class="nav-logo">Hispano Körkort</a>
+            <div class="nav-menu">
+                <a href="../../practica.html">Prácticas</a>
+                <a href="../../contenido/indice.html">Teoría</a>
+                <a href="../../catalogo_senales/portada.html">Señales</a>
+                <a href="../../autoescuelas/listado.html">Autoescuelas</a>
+                <a href="contacto.html">Contacto</a>
+                <button id="btnLogout" class="btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+    <main class="faq-container">
+        <h1>Preguntas Frecuentes</h1>
+        
+        <div class="faq-categories">
+            <button class="category-btn active" data-category="general">General</button>
+            <button class="category-btn" data-category="suscripciones">Suscripciones</button>
+            <button class="category-btn" data-category="tecnicos">Problemas Técnicos</button>
+            <button class="category-btn" data-category="contenido">Contenido</button>
+        </div>
+        
+        <div class="faq-list">
+            <div class="faq-item" data-category="general">
+                <h3>¿Cómo me registro en la plataforma?</h3>
+                <div class="faq-answer">
+                    <p>Puedes registrarte haciendo clic en "Registrarse" en la página de inicio. Necesitarás proporcionar tu nombre, email y crear una contraseña.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" data-category="general">
+                <h3>¿Olvidé mi contraseña, cómo la recupero?</h3>
+                <div class="faq-answer">
+                    <p>En la página de acceso, haz clic en "¿Olvidaste tu contraseña?" e ingresa tu email. Recibirás un enlace para restablecerla.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" data-category="suscripciones">
+                <h3>¿Cómo cancelo mi suscripción?</h3>
+                <div class="faq-answer">
+                    <p>Puedes cancelar tu suscripción en cualquier momento desde tu panel de usuario, en la sección "Suscripción".</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" data-category="suscripciones">
+                <h3>¿Qué métodos de pago aceptan?</h3>
+                <div class="faq-answer">
+                    <p>Aceptamos tarjetas de crédito/débito (Visa, Mastercard) y Swish.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" data-category="tecnicos">
+                <h3>La página no carga correctamente, ¿qué hago?</h3>
+                <div class="faq-answer">
+                    <p>Intenta recargar la página, borrar la caché del navegador o contactarnos si el problema persiste.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" data-category="contenido">
+                <h3>¿El contenido está disponible en otros idiomas?</h3>
+                <div class="faq-answer">
+                    <p>Actualmente el contenido está disponible en español y sueco. Estamos trabajando para agregar más idiomas.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="../../recursos/scripts/utilidades.js"></script>
+</body>
+</html>

@@ -1,1 +1,57 @@
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Vales - Hispano Körkort</title>
+    <link rel="stylesheet" href="../../recursos/estilos/base.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../inicio.html" class="nav-logo">Hispano Körkort</a>
+            <div class="nav-menu">
+                <a href="../../practica.html">Prácticas</a>
+                <a href="../../contenido/indice.html">Teoría</a>
+                <a href="../../catalogo_senales/portada.html">Señales</a>
+                <a href="../../autoescuelas/listado.html">Autoescuelas</a>
+                <button id="btnLogout" class="btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+    <main class="vouchers-container">
+        <h1>Generar Vales de Descuento</h1>
+        
+        <div class="voucher-form">
+            <form id="voucherForm">
+                <div class="form-group">
+                    <label for="amount">Monto del vale (SEK)</label>
+                    <input type="number" id="amount" min="50" max="500" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="validity">Válido hasta</label>
+                    <input type="date" id="validity" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantity">Cantidad</label>
+                    <input type="number" id="quantity" min="1" max="10" value="1" required>
+                </div>
+                
+                <button type="submit" class="btn-primary">Generar Vale(s)</button>
+            </form>
+        </div>
+        
+        <div id="voucherResult"></div>
+        
+        <div class="vouchers-list">
+            <h2>Vales Generados Recientemente</h2>
+            <div id="generatedVouchers">
+                <!-- Los vales generados se listarán aquí -->
+            </div>
+        </div>
+    </main>
+    <script type="module" src="../../recursos/scripts/vales.js"></script>
+</body>
+</html>

@@ -1,1 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 2: El Vehículo - Hispano Körkort</title>
+    <link rel="stylesheet" href="../../recursos/estilos/base.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../inicio.html" class="nav-logo">Hispano Körkort</a>
+            <div class="nav-menu">
+                <a href="../../practica.html">Prácticas</a>
+                <a href="../indice.html">Teoría</a>
+                <a href="../../catalogo_senales/portada.html">Señales</a>
+                <a href="../../autoescuelas/listado.html">Autoescuelas</a>
+                <button id="btnLogout" class="btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
 
+    <main class="theory-container">
+        <article class="theory-content">
+            <h1>El Vehículo</h1>
+            <div class="progress-indicator">
+                <span>Progreso: <span id="progress-value">0%</span></span>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <section>
+                <h2>Componentes del vehículo</h2>
+                <p>Conocer los componentes principales de tu vehículo es esencial para una conducción segura.</p>
+                
+                <h3>Sistema de frenos</h3>
+                <p>Los frenos son uno de los sistemas de seguridad más importantes:</p>
+                <ul>
+                    <li>Frenos de disco y tambor</li>
+                    <li>Sistema ABS (Anti-lock Braking System)</li>
+                    <li>Freno de estacionamiento</li>
+                </ul>
+                
+                <h3>Motor y transmisión</h3>
+                <p>Entender cómo funciona la potencia del vehículo:</p>
+                <ul>
+                    <li>Tipos de motores (gasolina, diésel, eléctrico)</li>
+                    <li>Transmisión manual y automática</li>
+                    <li>Relación potencia-peso</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Mantenimiento básico</h2>
+                <p>El mantenimiento regular previene averías y accidentes:</p>
+                
+                <h3>Revisiones periódicas</h3>
+                <ul>
+                    <li>Cambio de aceite y filtros</li>
+                    <li>Estado de neumáticos y presión</li>
+                    <li>Niveles de líquidos (frenos, dirección, refrigerante)</li>
+                </ul>
+            </section>
+
+            <div class="theory-actions">
+                <button id="markComplete" class="btn-primary">Marcar como completado</button>
+                <button id="takeQuiz" class="btn-accent">Realizar test del tema</button>
+            </div>
+        </article>
+    </main>
+
+    <script type="module" src="../../recursos/scripts/teoria.js"></script>
+</body>
+</html>

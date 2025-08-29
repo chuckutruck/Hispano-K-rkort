@@ -1,1 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoescuelas - Hispano Körkort</title>
+    <link rel="stylesheet" href="../../recursos/estilos/base.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../inicio.html" class="nav-logo">Hispano Körkort</a>
+            <div class="nav-menu">
+                <a href="../../practica.html">Prácticas</a>
+                <a href="../../contenido/indice.html">Teoría</a>
+                <a href="../../catalogo_senales/portada.html">Señales</a>
+                <a href="../../ayuda/contacto.html">Ayuda</a>
+                <button id="btnLogout" class="btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
 
+    <main class="driving-schools-container">
+        <h1>Autoescuelas Recomendadas</h1>
+        
+        <div class="filters-section">
+            <div class="search-box">
+                <input type="text" id="schoolSearch" placeholder="Buscar por nombre o ubicación...">
+                <button class="btn-primary">Buscar</button>
+            </div>
+            
+            <div class="filter-options">
+                <select id="cityFilter">
+                    <option value="">Todas las ciudades</option>
+                    <option value="stockholm">Estocolmo</option>
+                    <option value="goteborg">Gotemburgo</option>
+                    <option value="malmo">Malmö</option>
+                </select>
+                
+                <select id="ratingFilter">
+                    <option value="">Cualquier valoración</option>
+                    <option value="4">4+ estrellas</option>
+                    <option value="3">3+ estrellas</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="schools-list" id="schoolsContainer">
+            <!-- Las autoescuelas se cargarán dinámicamente -->
+        </div>
+        
+        <div class="map-section">
+            <h2>Ubicación de Autoescuelas</h2>
+            <div id="map" style="height: 400px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                <p>Mapa interactivo de autoescuelas</p>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="../../recursos/scripts/utilidades.js"></script>
+</body>
+</html>

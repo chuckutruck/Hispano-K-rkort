@@ -1,1 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prácticas - Hispano Körkort</title>
+    <link rel="stylesheet" href="../recursos/estilos/base.css">
+    <link rel="stylesheet" href="../recursos/estilos/practicas.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../inicio.html" class="nav-logo">Hispano Körkort</a>
+            <div class="nav-menu">
+                <a href="../contenido/indice.html">Teoría</a>
+                <a href="../catalogo_senales/portada.html">Señales</a>
+                <a href="../autoescuelas/listado.html">Autoescuelas</a>
+                <a href="../ayuda/contacto.html">Ayuda</a>
+                <button id="btnLogout" class="btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
 
+    <main class="practice-container">
+        <section class="quiz-section">
+            <h2>Simulacro de Examen</h2>
+            <div id="quiz-progress"></div>
+            <div id="question-container">
+                <div id="question"></div>
+                <div id="options-container" class="options-grid"></div>
+            </div>
+            <div class="quiz-actions">
+                <button id="btnPrevious" class="btn-secondary">Anterior</button>
+                <button id="btnNext" class="btn-primary">Siguiente</button>
+                <button id="btnSubmit" class="btn-accent">Finalizar Examen</button>
+            </div>
+        </section>
+
+        <aside class="stats-panel">
+            <h3>Tu Progreso</h3>
+            <div id="user-stats"></div>
+        </aside>
+    </main>
+
+    <script type="module" src="../recursos/scripts/pruebas.js"></script>
+</body>
+</html>

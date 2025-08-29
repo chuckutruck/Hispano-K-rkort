@@ -1,1 +1,50 @@
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canjear Vales - Hispano Körkort</title>
+    <link rel="stylesheet" href="../../recursos/estilos/base.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../inicio.html" class="nav-logo">Hispano Körkort</a>
+            <div class="nav-menu">
+                <a href="../../practica.html">Prácticas</a>
+                <a href="../../contenido/indice.html">Teoría</a>
+                <a href="../../catalogo_senales/portada.html">Señales</a>
+                <a href="../../autoescuelas/listado.html">Autoescuelas</a>
+                <button id="btnLogout" class="btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+    <main class="vouchers-container">
+        <h1>Canjear Vale de Descuento</h1>
+        
+        <div class="balance-info">
+            <p>Saldo actual: <strong id="userBalance">0 SEK</strong></p>
+        </div>
+        
+        <div class="redeem-form">
+            <form id="redeemForm">
+                <div class="form-group">
+                    <label for="voucherCode">Código del vale</label>
+                    <input type="text" id="voucherCode" required placeholder="Ingresa el código de 8 dígitos">
+                </div>
+                
+                <button type="submit" class="btn-primary">Canjear Vale</button>
+            </form>
+        </div>
+        
+        <div id="redeemResult"></div>
+        
+        <div class="vouchers-info">
+            <h2>¿Cómo funcionan los vales?</h2>
+            <p>Los vales canjeados se añaden a tu saldo y se utilizan automáticamente para pagar suscripciones.</p>
+            <p>Puedes generar vales para regalar a otras personas o canjear vales que hayas recibido.</p>
+        </div>
+    </main>
+    <script type="module" src="../../recursos/scripts/vales.js"></script>
+</body>
+</html>

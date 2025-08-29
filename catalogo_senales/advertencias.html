@@ -1,1 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Señales de Advertencia - Hispano Körkort</title>
+    <link rel="stylesheet" href="../../recursos/estilos/base.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../inicio.html" class="nav-logo">Hispano Körkort</a>
+            <div class="nav-menu">
+                <a href="../../practica.html">Prácticas</a>
+                <a href="../../contenido/indice.html">Teoría</a>
+                <a href="../portada.html">Señales</a>
+                <a href="../../autoescuelas/listado.html">Autoescuelas</a>
+                <button id="btnLogout" class="btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
 
+    <main class="signs-container">
+        <h1>Señales de Advertencia</h1>
+        <p>Estas señales alertan sobre peligros potenciales en la vía</p>
+        
+        <div class="signs-grid">
+            <div class="sign-card">
+                <div class="sign-image warning-1"></div>
+                <h3>Curva peligrosa a la izquierda</h3>
+                <p>Advierte sobre una curva cerrada hacia la izquierda</p>
+            </div>
+            
+            <div class="sign-card">
+                <div class="sign-image warning-2"></div>
+                <h3>Curva peligrosa a la derecha</h3>
+                <p>Advierte sobre una curva cerrada hacia la derecha</p>
+            </div>
+            
+            <div class="sign-card">
+                <div class="sign-image warning-3"></div>
+                <h3>Camino resbaladizo</h3>
+                <p>Indica que el pavimento puede estar resbaloso</p>
+            </div>
+            
+            <div class="sign-card">
+                <div class="sign-image warning-4"></div>
+                <h3>Zona de peatones</h3>
+                <p>Advierte sobre posible presencia de peatones</p>
+            </div>
+        </div>
+
+        <div class="signs-quiz">
+            <h2>Test de Señales de Advertencia</h2>
+            <div id="quiz-container"></div>
+            <button id="start-quiz" class="btn-primary">Comenzar Test</button>
+        </div>
+    </main>
+
+    <script type="module" src="../../recursos/scripts/utilidades.js"></script>
+</body>
+</html>

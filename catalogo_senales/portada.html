@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Señales - Hispano Körkort</title>
+    <link rel="stylesheet" href="../../recursos/estilos/base.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../inicio.html" class="nav-logo">Hispano Körkort</a>
+            <div class="nav-menu">
+                <a href="../../practica.html">Prácticas</a>
+                <a href="../../contenido/indice.html">Teoría</a>
+                <a href="../../autoescuelas/listado.html">Autoescuelas</a>
+                <a href="../../ayuda/contacto.html">Ayuda</a>
+                <button id="btnLogout" class="btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
 
+    <main class="signs-container">
+        <h1>Catálogo de Señales de Tráfico</h1>
+        
+        <div class="signs-categories">
+            <a href="advertencias.html" class="category-card">
+                <div class="category-icon warning"></div>
+                <h3>Señales de Advertencia</h3>
+                <p>Indican peligros potenciales en la vía</p>
+            </a>
+            
+            <a href="restricciones.html" class="category-card">
+                <div class="category-icon restriction"></div>
+                <h3>Señales de Restricción</h3>
+                <p>Limitan o prohíben ciertas acciones</p>
+            </a>
+            
+            <a href="obligaciones.html" class="category-card">
+                <div class="category-icon obligation"></div>
+                <h3>Señales de Obligación</h3>
+                <p>Indican acciones que deben realizarse</p>
+            </a>
+            
+            <a href="informativas.html" class="category-card">
+                <div class="category-icon information"></div>
+                <h3>Señales Informativas</h3>
+                <p>Proporcionan información útil al conductor</p>
+            </a>
+        </div>
+
+        <section class="quick-test">
+            <h2>Test Rápido de Señales</h2>
+            <div id="sign-quiz"></div>
+            <button id="startQuiz" class="btn-primary">Comenzar Test</button>
+        </section>
+    </main>
+
+    <script type="module" src="../../recursos/scripts/utilidades.js"></script>
+</body>
+</html>

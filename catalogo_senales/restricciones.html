@@ -1,1 +1,59 @@
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Señales de Restricción - Hispano Körkort</title>
+    <link rel="stylesheet" href="../../recursos/estilos/base.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../inicio.html" class="nav-logo">Hispano Körkort</a>
+            <div class="nav-menu">
+                <a href="../../practica.html">Prácticas</a>
+                <a href="../../contenido/indice.html">Teoría</a>
+                <a href="../portada.html">Señales</a>
+                <a href="../../autoescuelas/listado.html">Autoescuelas</a>
+                <button id="btnLogout" class="btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+    <main class="signs-container">
+        <h1>Señales de Restricción</h1>
+        <p>Estas señales indican prohibiciones o limitaciones en la vía</p>
+        
+        <div class="signs-grid">
+            <div class="sign-card">
+                <div class="sign-image restriction-1"></div>
+                <h3>Prohibido el paso</h3>
+                <p>Indica que no está permitido el acceso a la vía</p>
+            </div>
+            
+            <div class="sign-card">
+                <div class="sign-image restriction-2"></div>
+                <h3>Velocidad máxima</h3>
+                <p>Indica la velocidad máxima permitida en km/h</p>
+            </div>
+            
+            <div class="sign-card">
+                <div class="sign-image restriction-3"></div>
+                <h3>Prohibido adelantar</h3>
+                <p>Prohíbe el adelantamiento de vehículos</p>
+            </div>
+            
+            <div class="sign-card">
+                <div class="sign-image restriction-4"></div>
+                <h3>Prohibido parar</h3>
+                <p>No está permitido detener el vehículo</p>
+            </div>
+        </div>
+        <div class="signs-quiz">
+            <h2>Test de Señales de Restricción</h2>
+            <div id="quiz-container"></div>
+            <button id="start-quiz" class="btn-primary">Comenzar Test</button>
+        </div>
+    </main>
+    <script type="module" src="../../recursos/scripts/utilidades.js"></script>
+</body>
+</html>
