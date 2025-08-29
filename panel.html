@@ -7,20 +7,26 @@
     <link rel="stylesheet" href="recursos/estilos/base.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">
-                <h1><a href="index.html">Hispano Körkort</a></h1>
+    <header class="header">
+        <div class="header__container container">
+            <div class="header__logo">
+                <h1><a href="index.html" class="header__logo-link">Hispano Körkort</a></h1>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="contenido/indice.html">Contenido</a></li>
-                    <li><a href="catalogo_senales/portada.html">Señales</a></li>
-                    <li><a href="practica.html">Práctica</a></li>
-                    <li><a href="autoescuelas/listado.html">Autoescuelas</a></li>
+
+            <button class="header__toggle" aria-label="Abrir menú" aria-controls="nav-menu" aria-expanded="false">
+                ☰
+            </button>
+
+            <nav class="nav" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Inicio</a></li>
+                    <li class="nav__item"><a href="contenido/indice.html" class="nav__link">Contenido</a></li>
+                    <li class="nav__item"><a href="catalogo_senales/portada.html" class="nav__link">Señales</a></li>
+                    <li class="nav__item"><a href="practica.html" class="nav__link">Práctica</a></li>
+                    <li class="nav__item"><a href="autoescuelas/listado.html" class="nav__link">Autoescuelas</a></li>
                 </ul>
             </nav>
+
             <div class="user-menu">
                 <span id="userName">Usuario</span>
                 <div class="dropdown">
@@ -31,10 +37,10 @@
         </div>
     </header>
 
-    <main>
+    <main class="main">
         <div class="container">
             <h2>Panel de Control</h2>
-            
+
             <div class="dashboard">
                 <div class="dashboard-card">
                     <h3>Mi Progreso</h3>
@@ -95,13 +101,24 @@
         </div>
     </main>
 
-    <footer>
-        <div class="container">
+    <footer class="footer">
+        <div class="footer__container container">
             <p>&copy; 2023 Hispano Körkort. Todos los derechos reservados.</p>
         </div>
     </footer>
 
     <script type="module" src="recursos/scripts/app.js"></script>
     <script type="module" src="recursos/scripts/usuario.js"></script>
+    <script>
+        // Toggle menú hamburguesa
+        const toggle = document.querySelector('.header__toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        toggle.addEventListener('click', () => {
+            const expanded = toggle.getAttribute('aria-expanded') === 'true' || false;
+            toggle.setAttribute('aria-expanded', !expanded);
+            navMenu.classList.toggle('nav--active');
+        });
+    </script>
 </body>
 </html>

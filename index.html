@@ -7,104 +7,115 @@
     <link rel="stylesheet" href="recursos/estilos/base.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">
-                <h1>Hispano Körkort</h1>
+    <header class="header">
+        <div class="header__container container">
+            <div class="header__logo">
+                <h1><a href="index.html">Hispano Körkort</a></h1>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html" class="active">Inicio</a></li>
-                    <li><a href="contenido/indice.html">Contenido</a></li>
-                    <li><a href="catalogo_senales/portada.html">Señales</a></li>
-                    <li><a href="practica.html">Práctica</a></li>
-                    <li><a href="autoescuelas/listado.html">Autoescuelas</a></li>
-                    <li><a href="ayuda/contacto.html">Ayuda</a></li>
+
+            <button class="header__toggle" aria-label="Abrir menú" aria-controls="nav-menu" aria-expanded="false">
+                ☰
+            </button>
+
+            <nav class="nav" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link active">Inicio</a></li>
+                    <li class="nav__item"><a href="contenido/indice.html" class="nav__link">Contenido</a></li>
+                    <li class="nav__item"><a href="catalogo_senales/portada.html" class="nav__link">Señales</a></li>
+                    <li class="nav__item"><a href="practica.html" class="nav__link">Práctica</a></li>
+                    <li class="nav__item"><a href="autoescuelas/listado.html" class="nav__link">Autoescuelas</a></li>
+                    <li class="nav__item"><a href="ayuda/contacto.html" class="nav__link">Ayuda</a></li>
                 </ul>
             </nav>
+
             <div class="user-actions">
-                <a href="acceso.html" class="btn btn-outline">Iniciar Sesión</a>
-                <a href="acceso.html" class="btn btn-primary">Registrarse</a>
+                <a href="acceso.html" class="btn btn--outline">Iniciar Sesión</a>
+                <a href="acceso.html" class="btn btn--primary">Registrarse</a>
             </div>
         </div>
     </header>
 
     <main>
-        <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h2>Aprende a conducir de forma efectiva</h2>
-                    <p>Prepara tu examen teórico de conducir con nuestros recursos educativos y tests prácticos.</p>
-                    <div class="hero-actions">
-                        <a href="practica.html" class="btn btn-primary">Comenzar prueba</a>
-                        <a href="contenido/indice.html" class="btn btn-outline">Ver contenido</a>
-                    </div>
+        <section class="hero container">
+            <div class="hero-content">
+                <h2>Aprende a conducir de forma efectiva</h2>
+                <p>Prepara tu examen teórico de conducir con nuestros recursos educativos y tests prácticos.</p>
+                <div class="hero-actions">
+                    <a href="practica.html" class="btn btn--primary">Comenzar prueba</a>
+                    <a href="contenido/indice.html" class="btn btn--outline">Ver contenido</a>
                 </div>
-                <div class="hero-image">
-                    <img src="recursos/imagenes/hero-image.png" alt="Aprende a conducir">
-                </div>
+            </div>
+            <div class="hero-image">
+                <img src="recursos/imagenes/hero-image.png" alt="Aprende a conducir">
             </div>
         </section>
 
-        <section class="features">
-            <div class="container">
-                <h2>¿Por qué elegirnos?</h2>
-                <div class="features-grid">
-                    <div class="feature">
-                        <div class="feature-icon">📚</div>
-                        <h3>Contenido completo</h3>
-                        <p>Todo el material necesario para aprobar el examen teórico.</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">🚦</div>
-                        <h3>Catálogo de señales</h3>
-                        <p>Aprende todas las señales de tráfico de forma organizada.</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">📝</div>
-                        <h3>Tests ilimitados</h3>
-                        <p>Practica con tests similares al examen real.</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">🏫</div>
-                        <h3>Autoescuelas asociadas</h3>
-                        <p>Encuentra la autoescuela perfecta para tus clases prácticas.</p>
-                    </div>
+        <section class="features container">
+            <h2>¿Por qué elegirnos?</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">📚</div>
+                    <h3>Contenido completo</h3>
+                    <p>Todo el material necesario para aprobar el examen teórico.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🚦</div>
+                    <h3>Catálogo de señales</h3>
+                    <p>Aprende todas las señales de tráfico de forma organizada.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📝</div>
+                    <h3>Tests ilimitados</h3>
+                    <p>Practica con tests similares al examen real.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🏫</div>
+                    <h3>Autoescuelas asociadas</h3>
+                    <p>Encuentra la autoescuela perfecta para tus clases prácticas.</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Hispano Körkort</h3>
-                    <p>Plataforma educativa para el aprendizaje de conducción.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Enlaces</h3>
-                    <ul>
-                        <li><a href="contenido/indice.html">Contenido</a></li>
-                        <li><a href="catalogo_senales/portada.html">Señales</a></li>
-                        <li><a href="practica.html">Práctica</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Legal</h3>
-                    <ul>
-                        <li><a href="ayuda/condiciones.html">Términos y condiciones</a></li>
-                        <li><a href="ayuda/privacidad.html">Política de privacidad</a></li>
-                        <li><a href="ayuda/contacto.html">Contacto</a></li>
-                    </ul>
-                </div>
+    <footer class="footer container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Hispano Körkort</h3>
+                <p>Plataforma educativa para el aprendizaje de conducción.</p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2023 Hispano Körkort. Todos los derechos reservados.</p>
+            <div class="footer-section">
+                <h3>Enlaces</h3>
+                <ul>
+                    <li><a href="contenido/indice.html">Contenido</a></li>
+                    <li><a href="catalogo_senales/portada.html">Señales</a></li>
+                    <li><a href="practica.html">Práctica</a></li>
+                </ul>
             </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="ayuda/condiciones.html">Términos y condiciones</a></li>
+                    <li><a href="ayuda/privacidad.html">Política de privacidad</a></li>
+                    <li><a href="ayuda/contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Hispano Körkort. Todos los derechos reservados.</p>
         </div>
     </footer>
 
     <script type="module" src="recursos/scripts/app.js"></script>
+    <script>
+        // Toggle menú hamburguesa
+        const toggle = document.querySelector('.header__toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        toggle.addEventListener('click', () => {
+            const expanded = toggle.getAttribute('aria-expanded') === 'true' || false;
+            toggle.setAttribute('aria-expanded', !expanded);
+            navMenu.classList.toggle('nav--active');
+        });
+    </script>
 </body>
 </html>
