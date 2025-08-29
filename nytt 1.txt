@@ -1,0 +1,165 @@
+Objetivo
+
+Desarrollar una aplicación web llamada TimeBook Pro para gestión y seguimiento de horas de trabajo en proyectos, con registro de entradas, reportes visuales, exportación de datos y sincronización en tiempo real en múltiples dispositivos.
+
+Características
+
+Autenticación de usuarios: registro, inicio y cierre de sesión (Firebase Authentication).
+
+Gestión de proyectos: crear, editar, eliminar.
+
+Registro de horas trabajadas: fecha, proyecto, hora de inicio y fin, tiempo de descanso, notas y compañeros.
+
+Historial de registros: filtrable por año, mes y semana, incluyendo pestaña “Todos los proyectos”.
+
+Estadísticas visuales: gráficos con Chart.js, cálculo automático de horas totales por semana y mes.
+
+Sincronización en tiempo real: Firebase Realtime Database.
+
+Interfaz responsive: diseño limpio con TailwindCSS y Font Awesome.
+
+Gestión de usuario: editar perfil, teléfono, nombre y apellidos.
+
+Indicador de conexión y sincronización: estados online, offline, sincronizado, sincronizando.
+
+Idiomas: idioma oficial sueco, con soporte opcional para otros idiomas mediante diccionario de traducciones.
+
+Estilos y componentes UI: modales, tarjetas, formularios, tablas, botones con efectos hover y animaciones suaves.
+
+Configuraciones Firebase
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAI-VxrbSC-d1WscOkpY9d8NaEUgdjneeE",
+  authDomain: "tidbok-df555.firebaseapp.com",
+  databaseURL: "https://tidbok-df555-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "tidbok-df555",
+  storageBucket: "tidbok-df555.firebasestorage.app",
+  messagingSenderId: "467331966400",
+  appId: "1:467331966400:web:abb6949a76918f2eb8d425"
+};
+
+const app = initializeApp(firebaseConfig);
+
+Reglas Firebase
+{
+  "rules": {
+    "users": {
+      "$userId": {
+        ".read": "auth != null && auth.uid === $userId",
+        ".write": "auth != null && auth.uid === $userId",
+        "projects": {
+          "$projectId": {
+            ".validate": "newData.hasChildren(['name', 'code'])",
+            "name": { ".validate": "newData.isString() && newData.val().length > 0" },
+            "code": { ".validate": "newData.isString() && newData.val().length > 0" }
+          }
+        },
+        "records": {
+          "$entryId": {
+            ".validate": "newData.hasChildren(['date', 'projectId', 'startTime', 'endTime'])",
+            "date": { ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}$/)" },
+            "startTime": { ".validate": "newData.isString() && newData.val().matches(/^\\d{2}:\\d{2}$/)" },
+            "endTime": { 
+              ".validate": "newData.isString() && newData.val().matches(/^\\d{2}:\\d{2}$/) && (parseInt(newData.val().replace(':','')) > parseInt(newData.parent().child('startTime').val().replace(':','')))"
+            },
+            "breakTime": { ".validate": "newData.isNumber() && newData.val() >= 0" }
+          }
+        }
+      }
+    },
+    ".read": false,
+    ".write": false
+  }
+}
+
+
+Nota: La validación de endTime ahora compara correctamente horas en formato numérico.
+
+Variables de estado
+
+Usuario, proyectos, registros, idioma, conexión, sincronización.
+
+Herramientas y librerías
+
+Frontend: HTML5, CSS3, JavaScript ES6.
+
+CSS: TailwindCSS.
+
+Iconos: Font Awesome.
+
+Fecha/Hora: Flatpickr.
+
+Gráficos: Chart.js.
+
+PDF: jsPDF + html2canvas.
+
+IDs únicos: uuid.js.
+
+Exportación a PDF y Word
+
+Antes de exportar se mostrará un formulario de filtros:
+
+Rango de fechas (inicio y fin; por defecto primer y último día del mes actual).
+
+Selección de proyecto (lista desplegable: proyecto específico o “Todos”).
+
+Opciones de orden: por fecha y/o proyecto, ascendente/descendente.
+
+Botones Generar y Cancelar deben funcionar con clic, tecla Enter o comandos de teclado.
+
+Evitar errores de DOM como:
+
+Cannot set properties of null (setting 'textContent')
+
+
+Membrete en reportes:
+
+Köpmangatan 5, plan 10
+151 71 Södertälje
+Tel 079-079 00 45
+Organisationsnummer: 559096-5983
+Mätningsingenjör: [Nombre y apellido del usuario]
+Tidrapport
+
+UI y formularios
+
+Modal/panel para:
+
+Seleccionar rango de fechas y proyecto.
+
+Registro de datos precargados: fecha actual, inicio 01:30 am, fin 10:00 am, descanso 0, media hora, 1 o 2 horas.
+
+Todos los datos editables y eliminables.
+
+Tablas: resumen y detalle de horas, con paginación automática y orden configurable.
+
+Pestañas “Timsummering” y “History”: permitir ocultar/mostrar información a voluntad del usuario.
+
+Funciones principales
+
+Autenticación: handleLogin(), handleSignup(), handleLogout().
+
+Gestión de usuario: loadUserProfile(), updateUserInfo(), handleEditUser().
+
+Gestión de proyectos: loadProjects(), handleAddProject(), openProjectModal(), closeProjectModal().
+
+Registros de tiempo: handleTimeEntrySubmit(), loadRecords(), filterRecords(), handleEditRecord(), handleDeleteRecord().
+
+Estadísticas: initWeeklyChart(), initProjectChart(), updateStatistics().
+
+Conexión y sincronización: setupConnectionMonitoring(), updateConnectionStatus(), updateSyncStatus().
+
+Auxiliares UI: showApp(), showAuthScreen(), showAlert(), showAuthAlert(), showLoading().
+
+Inicialización: initApp(), setupEventListeners(), setupRealtimeListeners().
+
+Exportación: exportToPDF(), exportToWord() (igual configuración de filtros).
+
+Notas adicionales
+
+Asegurarse que todos los botones y funciones, especialmente exportar PDF/Word, funcionen correctamente.
+
+El idioma oficial es sueco, revisar traducciones y fallback de otros idiomas.
+
+Revisar que no haya funciones repetidas y eliminar comentarios guía innecesarios (<!-- ... -->).
