@@ -4,11 +4,387 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo de Señales - Hispano Körkort</title>
-    <link rel="stylesheet" href="../../recursos/estilos/base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Orbitron:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005ea2;
+            --secondary: #00b4d8;
+            --accent: #7b2cbf;
+            --accent-alt: #ff9e00;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #f8f9fa;
+            --success: #00cc88;
+            --warning: #ffd166;
+            --danger: #ff6b6b;
+            --neutral: #6c757d;
+            
+            --glow-primary: 0 0 10px rgba(0, 180, 216, 0.7);
+            --glow-accent: 0 0 10px rgba(123, 44, 191, 0.7);
+            --glow-success: 0 0 10px rgba(0, 204, 136, 0.7);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        .navbar {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 180, 216, 0.2);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: var(--glow-primary);
+        }
+        
+        .nav-logo::before {
+            content: "🚗";
+            font-size: 1.5rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            align-items: center;
+        }
+        
+        .nav-menu a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 180, 216, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--secondary);
+            box-shadow: var(--glow-primary);
+        }
+        
+        .nav-menu a:hover::before {
+            left: 100%;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 107, 107, 0.2);
+            color: white;
+            border: 1px solid var(--danger);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 107, 107, 0.4);
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.7);
+        }
+        
+        /* Main Content */
+        .signs-container {
+            padding: 40px 0;
+        }
+        
+        .signs-container h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(0, 180, 216, 0.5);
+        }
+        
+        .signs-container > p {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Categories Grid */
+        .signs-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+        
+        .category-card {
+            background: rgba(18, 18, 18, 0.6);
+            border-radius: 15px;
+            overflow: hidden;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            text-decoration: none;
+            color: var(--light);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(0, 180, 216, 0.1), transparent 70%);
+            z-index: 0;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: var(--secondary);
+            color: var(--light);
+        }
+        
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .category-icon.warning {
+            background: linear-gradient(135deg, rgba(255, 209, 102, 0.2), rgba(255, 209, 102, 0.1));
+            color: var(--warning);
+            box-shadow: 0 0 15px rgba(255, 209, 102, 0.5);
+        }
+        
+        .category-icon.restriction {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 107, 107, 0.1));
+            color: var(--danger);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+        }
+        
+        .category-icon.obligation {
+            background: linear-gradient(135deg, rgba(0, 204, 136, 0.2), rgba(0, 204, 136, 0.1));
+            color: var(--success);
+            box-shadow: 0 0 15px rgba(0, 204, 136, 0.5);
+        }
+        
+        .category-icon.information {
+            background: linear-gradient(135deg, rgba(0, 180, 216, 0.2), rgba(0, 180, 216, 0.1));
+            color: var(--secondary);
+            box-shadow: 0 0 15px rgba(0, 180, 216, 0.5);
+        }
+        
+        .category-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .category-card p {
+            color: #ccc;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Quick Test Section */
+        .quick-test {
+            background: rgba(18, 18, 18, 0.6);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            text-align: center;
+        }
+        
+        .quick-test h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        #sign-quiz {
+            margin-bottom: 25px;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quiz-placeholder {
+            color: #999;
+            font-style: italic;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: var(--glow-primary);
+            transform: translateY(-2px);
+        }
+        
+        /* Quiz Styles (when active) */
+        .quiz-container {
+            width: 100%;
+        }
+        
+        .quiz-question {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-option:hover {
+            background: rgba(0, 180, 216, 0.2);
+            border-color: var(--secondary);
+        }
+        
+        .quiz-option.correct {
+            background: rgba(0, 204, 136, 0.2);
+            border-color: var(--success);
+        }
+        
+        .quiz-option.incorrect {
+            background: rgba(255, 107, 107, 0.2);
+            border-color: var(--danger);
+        }
+        
+        .quiz-result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(0, 180, 216, 0.1);
+            border: 1px solid var(--secondary);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .signs-categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .nav-menu {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .signs-container h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
-        <div class="nav-container">
+        <div class="nav-container container">
             <a href="../index.html" class="nav-logo">Hispano Körkort</a>
             <div class="nav-menu">
                 <a href="../practica.html">Prácticas</a>
@@ -20,30 +396,39 @@
         </div>
     </nav>
 
-    <main class="signs-container">
+    <main class="signs-container container">
         <h1>Catálogo de Señales de Tráfico</h1>
+        <p>Domina las señales de tráfico suecas con nuestro catálogo interactivo y tests de práctica</p>
         
         <div class="signs-categories">
             <a href="advertencias.html" class="category-card">
-                <div class="category-icon warning"></div>
+                <div class="category-icon warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
                 <h3>Señales de Advertencia</h3>
                 <p>Indican peligros potenciales en la vía</p>
             </a>
             
             <a href="restricciones.html" class="category-card">
-                <div class="category-icon restriction"></div>
+                <div class="category-icon restriction">
+                    <i class="fas fa-ban"></i>
+                </div>
                 <h3>Señales de Restricción</h3>
                 <p>Limitan o prohíben ciertas acciones</p>
             </a>
             
             <a href="obligaciones.html" class="category-card">
-                <div class="category-icon obligation"></div>
+                <div class="category-icon obligation">
+                    <i class="fas fa-arrow-circle-right"></i>
+                </div>
                 <h3>Señales de Obligación</h3>
                 <p>Indican acciones que deben realizarse</p>
             </a>
             
             <a href="informativas.html" class="category-card">
-                <div class="category-icon information"></div>
+                <div class="category-icon information">
+                    <i class="fas fa-info-circle"></i>
+                </div>
                 <h3>Señales Informativas</h3>
                 <p>Proporcionan información útil al conductor</p>
             </a>
@@ -51,11 +436,154 @@
 
         <section class="quick-test">
             <h2>Test Rápido de Señales</h2>
-            <div id="sign-quiz"></div>
-            <button id="startQuiz" class="btn-primary">Comenzar Test</button>
+            <div id="sign-quiz">
+                <p class="quiz-placeholder">Haz clic en comenzar para poner a prueba tus conocimientos sobre señales de tráfico</p>
+            </div>
+            <button id="startQuiz" class="btn-primary">
+                <i class="fas fa-play"></i> Comenzar Test
+            </button>
         </section>
     </main>
 
-    <script type="module" src="../../recursos/scripts/utilidades.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startQuizBtn = document.getElementById('startQuiz');
+            const signQuiz = document.getElementById('sign-quiz');
+            
+            // Datos de ejemplo para el quiz
+            const quizData = [
+                {
+                    question: "¿Qué indica esta señal?",
+                    options: [
+                        { text: "Curva peligrosa a la izquierda", correct: false },
+                        { text: "Prohibido adelantar", correct: false },
+                        { text: "Ceda el paso", correct: true },
+                        { text: "Velocidad máxima", correct: false }
+                    ]
+                },
+                {
+                    question: "¿Qué debe hacer al ver una señal triangular con un tren?",
+                    options: [
+                        { text: "Acelerar para cruzar rápido", correct: false },
+                        { text: "Ceder el paso al tren", correct: true },
+                        { text: "Tocar el claxon", correct: false },
+                        { text: "Estacionar el vehículo", correct: false }
+                    ]
+                },
+                {
+                    question: "¿Qué indica una señal redonda con fondo azul?",
+                    options: [
+                        { text: "Prohibición", correct: false },
+                        { text: "Advertencia", correct: false },
+                        { text: "Obligación", correct: true },
+                        { text: "Información", correct: false }
+                    ]
+                }
+            ];
+            
+            let currentQuestion = 0;
+            let score = 0;
+            
+            startQuizBtn.addEventListener('click', startQuiz);
+            
+            function startQuiz() {
+                currentQuestion = 0;
+                score = 0;
+                startQuizBtn.style.display = 'none';
+                showQuestion();
+            }
+            
+            function showQuestion() {
+                if (currentQuestion >= quizData.length) {
+                    showResults();
+                    return;
+                }
+                
+                const question = quizData[currentQuestion];
+                const quizHTML = `
+                    <div class="quiz-container">
+                        <div class="quiz-question">${question.question}</div>
+                        <div class="quiz-options">
+                            ${question.options.map((option, index) => `
+                                <div class="quiz-option" data-correct="${option.correct}" data-index="${index}">
+                                    ${option.text}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                signQuiz.innerHTML = quizHTML;
+                
+                // Add event listeners to options
+                const options = signQuiz.querySelectorAll('.quiz-option');
+                options.forEach(option => {
+                    option.addEventListener('click', checkAnswer);
+                });
+            }
+            
+            function checkAnswer(e) {
+                const selectedOption = e.currentTarget;
+                const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+                
+                // Disable all options
+                const options = signQuiz.querySelectorAll('.quiz-option');
+                options.forEach(option => {
+                    option.removeEventListener('click', checkAnswer);
+                    if (option.getAttribute('data-correct') === 'true') {
+                        option.classList.add('correct');
+                    } else if (option === selectedOption && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                if (isCorrect) {
+                    score++;
+                }
+                
+                // Show next button
+                const nextButton = document.createElement('button');
+                nextButton.textContent = currentQuestion < quizData.length - 1 ? 'Siguiente Pregunta' : 'Ver Resultados';
+                nextButton.className = 'btn-primary';
+                nextButton.style.marginTop = '20px';
+                nextButton.addEventListener('click', nextQuestion);
+                signQuiz.appendChild(nextButton);
+            }
+            
+            function nextQuestion() {
+                currentQuestion++;
+                showQuestion();
+            }
+            
+            function showResults() {
+                signQuiz.innerHTML = `
+                    <div class="quiz-result">
+                        <h3>Resultados del Test</h3>
+                        <p>Obtuviste ${score} de ${quizData.length} puntos</p>
+                        <p>${score >= quizData.length / 2 ? '¡Buen trabajo! Sigue practicando.' : 'Sigue estudiando, lo harás mejor la próxima vez.'}</p>
+                    </div>
+                `;
+                
+                startQuizBtn.style.display = 'inline-flex';
+                startQuizBtn.innerHTML = '<i class="fas fa-redo"></i> Intentar de Nuevo';
+            }
+            
+            // Efectos de hover para las tarjetas de categoría
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-5px)';
+                    card.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.2)';
+                    card.style.borderColor = 'var(--secondary)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                    card.style.boxShadow = '';
+                    card.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>

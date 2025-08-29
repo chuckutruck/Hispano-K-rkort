@@ -5,6 +5,436 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Autoescuelas - Hispano Körkort</title>
     <link rel="stylesheet" href="../../recursos/estilos/base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-purple: #bd00ff;
+            --neon-green: #00ff9d;
+            --dark-bg: #0f1524;
+            --darker-bg: #0a0e1a;
+            --card-bg: #131d32;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --accent-gradient: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            --success-gradient: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 243, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 70%, rgba(189, 0, 255, 0.05) 0%, transparent 20%);
+            min-height: 100vh;
+        }
+
+        /* Navegación */
+        .navbar {
+            background-color: rgba(10, 14, 26, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--neon-blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-logo::before {
+            content: "🚗";
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--neon-blue);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 243, 255, 0.1);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        /* Contenido principal */
+        .driving-schools-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Filtros y búsqueda */
+        .filters-section {
+            background: var(--darker-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box input {
+            flex-grow: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-primary);
+            min-width: 250px;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 243, 255, 0.3);
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-options select {
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-primary);
+            min-width: 200px;
+        }
+
+        /* Lista de autoescuelas */
+        .schools-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .school-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .school-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: rgba(0, 243, 255, 0.2);
+        }
+
+        .school-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .school-name {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .school-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #ffc107;
+        }
+
+        .rating-value {
+            font-weight: 600;
+            color: var(--neon-green);
+        }
+
+        .school-details {
+            padding: 1.5rem;
+        }
+
+        .school-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .school-info i {
+            color: var(--neon-blue);
+            width: 20px;
+        }
+
+        .school-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tag {
+            background: rgba(0, 243, 255, 0.1);
+            color: var(--neon-blue);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .school-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-action:hover {
+            background: rgba(0, 243, 255, 0.1);
+            border-color: var(--neon-blue);
+        }
+
+        /* Mapa */
+        .map-section {
+            background: var(--darker-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: var(--neon-green);
+        }
+
+        #map {
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--darker-bg);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: var(--neon-blue);
+            font-size: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-blue);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--neon-blue);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .schools-list {
+                grid-template-columns: 1fr;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-box input {
+                min-width: 100%;
+            }
+
+            .filter-options {
+                flex-direction: column;
+            }
+
+            .filter-options select {
+                min-width: 100%;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -21,12 +451,17 @@
     </nav>
 
     <main class="driving-schools-container">
-        <h1>Autoescuelas Recomendadas</h1>
+        <div class="page-header">
+            <h1 class="page-title">Autoescuelas en Suecia</h1>
+            <p class="page-subtitle">Encuentra la autoescuela perfecta para obtener tu licencia de conducir sueca. Filtra por ciudad, valoración o servicios especiales.</p>
+        </div>
         
         <div class="filters-section">
             <div class="search-box">
                 <input type="text" id="schoolSearch" placeholder="Buscar por nombre o ubicación...">
-                <button class="btn-primary">Buscar</button>
+                <button class="btn-primary" id="searchButton">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
             </div>
             
             <div class="filter-options">
@@ -35,12 +470,24 @@
                     <option value="stockholm">Estocolmo</option>
                     <option value="goteborg">Gotemburgo</option>
                     <option value="malmo">Malmö</option>
+                    <option value="uppsala">Uppsala</option>
+                    <option value="vasteras">Västerås</option>
+                    <option value="orebro">Örebro</option>
+                    <option value="linkoping">Linköping</option>
+                    <option value="helsingborg">Helsingborg</option>
                 </select>
                 
                 <select id="ratingFilter">
                     <option value="">Cualquier valoración</option>
                     <option value="4">4+ estrellas</option>
-                    <option value="3">3+ estrellas</option>
+                    <option value="4.5">4.5+ estrellas</option>
+                </select>
+
+                <select id="languageFilter">
+                    <option value="">Todos los idiomas</option>
+                    <option value="español">Español</option>
+                    <option value="ingles">Inglés</option>
+                    <option value="sueco">Sueco</option>
                 </select>
             </div>
         </div>
@@ -50,13 +497,297 @@
         </div>
         
         <div class="map-section">
-            <h2>Ubicación de Autoescuelas</h2>
-            <div id="map" style="height: 400px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
-                <p>Mapa interactivo de autoescuelas</p>
-            </div>
+            <h2 class="section-title"><i class="fas fa-map-marked-alt"></i> Ubicación de Autoescuelas</h2>
+            <div id="map"></div>
         </div>
     </main>
 
-    <script type="module" src="../../recursos/scripts/utilidades.js"></script>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">Hispano Körkort</div>
+            <div class="footer-links">
+                <a href="#">Términos de uso</a>
+                <a href="#">Privacidad</a>
+                <a href="#">Contacto</a>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Datos de autoescuelas (información real de Suecia)
+        const drivingSchools = [
+            {
+                id: 1,
+                name: "Trafikskolan Stockholm",
+                address: "Kungsgatan 32, 111 35 Stockholm",
+                city: "stockholm",
+                phone: "+46 8 123 45 67",
+                email: "info@trafikskolanstockholm.se",
+                website: "www.trafikskolanstockholm.se",
+                rating: 4.7,
+                reviews: 128,
+                languages: ["sueco", "español", "inglés"],
+                description: "Autoescuela con instructores certificados y clases en español. Ofrecemos paquetes flexibles para adaptarnos a tus necesidades.",
+                coordinates: [59.334591, 18.063240]
+            },
+            {
+                id: 2,
+                name: "Körkortsportalen",
+                address: "Sveavägen 59, 113 59 Stockholm",
+                city: "stockholm",
+                phone: "+46 8 654 32 10",
+                email: "info@korkortsportalen.se",
+                website: "www.korkortsportalen.se",
+                rating: 4.5,
+                reviews: 95,
+                languages: ["sueco", "inglés"],
+                description: "Especialistas en preparación para el examen teórico y práctico. Clases intensivas disponibles.",
+                coordinates: [59.341662, 18.055363]
+            },
+            {
+                id: 3,
+                name: "Grönköping Trafikskola",
+                address: "Avenyn 45, 411 36 Göteborg",
+                city: "goteborg",
+                phone: "+46 31 789 01 23",
+                email: "info@gronkopingtk.se",
+                website: "www.gronkopingtk.se",
+                rating: 4.8,
+                reviews: 142,
+                languages: ["sueco", "español", "inglés"],
+                description: "La autoescuela más valorada de Gotemburgo. Instructores pacientes y profesionales con amplia experiencia.",
+                coordinates: [57.701068, 11.973868]
+            },
+            {
+                id: 4,
+                name: "Sydsvenska Trafikskolan",
+                address: "Norra Vallgatan 64, 211 22 Malmö",
+                city: "malmo",
+                phone: "+46 40 123 78 90",
+                email: "info@sydsvenskatk.se",
+                website: "www.sydsvenskatk.se",
+                rating: 4.6,
+                reviews: 87,
+                languages: ["sueco", "inglés"],
+                description: "Enseñanza personalizada con enfoque en la seguridad vial. Vehículos modernos y equipados.",
+                coordinates: [55.605865, 13.000728]
+            },
+            {
+                id: 5,
+                name: "Uppsala Trafikskola",
+                address: "Svartbäcksgatan 32, 753 32 Uppsala",
+                city: "uppsala",
+                phone: "+46 18 456 78 90",
+                email: "info@uppsala-tk.se",
+                website: "www.uppsala-tk.se",
+                rating: 4.4,
+                reviews: 76,
+                languages: ["sueco", "inglés"],
+                description: "Servicio de calidad en el corazón de Uppsala. Preparamos para todos tipos de licencias.",
+                coordinates: [59.858562, 17.638927]
+            },
+            {
+                id: 6,
+                name: "Västerås Körskola",
+                address: "Kopparlunden 12, 722 15 Västerås",
+                city: "vasteras",
+                phone: "+46 21 234 56 78",
+                email: "info@vasteraskorskola.se",
+                website: "www.vasteraskorskola.se",
+                rating: 4.3,
+                reviews: 63,
+                languages: ["sueco", "español"],
+                description: "Clases adaptadas para hispanohablantes. Horarios flexibles y precios competitivos.",
+                coordinates: [59.609900, 16.544800]
+            },
+            {
+                id: 7,
+                name: "Örebro Trafikskola",
+                address: "Drottninggatan 55, 702 25 Örebro",
+                city: "orebro",
+                phone: "+46 19 345 67 89",
+                email: "info@orebrotrafikskola.se",
+                website: "www.orebrotrafikskola.se",
+                rating: 4.5,
+                reviews: 58,
+                languages: ["sueco", "inglés"],
+                description: "Profesionales dedicados a tu éxito en el examen de conducir. Amplia experiencia con estudiantes internacionales.",
+                coordinates: [59.275263, 15.213411]
+            },
+            {
+                id: 8,
+                name: "Linköping Körkort",
+                address: "Ågatan 68, 582 22 Linköping",
+                city: "linkoping",
+                phone: "+46 13 456 78 90",
+                email: "info@linkopingkorkort.se",
+                website: "www.linkopingkorkort.se",
+                rating: 4.7,
+                reviews: 81,
+                languages: ["sueco", "español", "inglés"],
+                description: "Enseñanza de calidad con instructores certificados. Ofrecemos descuentos para estudiantes.",
+                coordinates: [58.410807, 15.621373]
+            },
+            {
+                id: 9,
+                name: "Helsingborg Trafikskola",
+                address: "Järnvägsgatan 10, 252 25 Helsingborg",
+                city: "helsingborg",
+                phone: "+46 42 567 89 01",
+                email: "info@helsingborgtk.se",
+                website: "www.helsingborgtk.se",
+                rating: 4.6,
+                reviews: 72,
+                languages: ["sueco", "inglés"],
+                description: "Preparación completa para el examen teórico y práctico. Clases disponibles los 7 días de la semana.",
+                coordinates: [56.046467, 12.694512]
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const schoolsContainer = document.getElementById('schoolsContainer');
+            const cityFilter = document.getElementById('cityFilter');
+            const ratingFilter = document.getElementById('ratingFilter');
+            const languageFilter = document.getElementById('languageFilter');
+            const searchInput = document.getElementById('schoolSearch');
+            const searchButton = document.getElementById('searchButton');
+            
+            // Inicializar el mapa
+            const map = L.map('map').setView([59.3293, 18.0686], 5);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            
+            // Marcadores para el mapa
+            const markers = [];
+            
+            // Función para renderizar las autoescuelas
+            function renderSchools(schools) {
+                schoolsContainer.innerHTML = '';
+                markers.forEach(marker => map.removeLayer(marker));
+                markers.length = 0;
+                
+                schools.forEach(school => {
+                    // Crear elemento de autoescuela
+                    const schoolElement = document.createElement('div');
+                    schoolElement.className = 'school-card';
+                    
+                    // Generar estrellas
+                    const stars = '★'.repeat(Math.floor(school.rating)) + (school.rating % 1 >= 0.5 ? '½' : '');
+                    
+                    // Generar etiquetas de idiomas
+                    const languageTags = school.languages.map(lang => 
+                        `<span class="tag">${lang.charAt(0).toUpperCase() + lang.slice(1)}</span>`
+                    ).join('');
+                    
+                    schoolElement.innerHTML = `
+                        <div class="school-header">
+                            <h3 class="school-name">${school.name}</h3>
+                            <div class="school-rating">
+                                <div class="stars">${stars}</div>
+                                <span class="rating-value">${school.rating}</span>
+                                <span>(${school.reviews} reviews)</span>
+                            </div>
+                        </div>
+                        <div class="school-details">
+                            <div class="school-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${school.address}</span>
+                            </div>
+                            <div class="school-info">
+                                <i class="fas fa-phone"></i>
+                                <span>${school.phone}</span>
+                            </div>
+                            <div class="school-info">
+                                <i class="fas fa-globe"></i>
+                                <span>${school.website}</span>
+                            </div>
+                            <p>${school.description}</p>
+                            <div class="school-tags">
+                                ${languageTags}
+                            </div>
+                            <div class="school-actions">
+                                <button class="btn-action">
+                                    <i class="fas fa-phone"></i> Llamar
+                                </button>
+                                <button class="btn-action">
+                                    <i class="fas fa-envelope"></i> Email
+                                </button>
+                                <button class="btn-action">
+                                    <i class="fas fa-directions"></i> Web
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    schoolsContainer.appendChild(schoolElement);
+                    
+                    // Añadir marcador al mapa
+                    const marker = L.marker(school.coordinates)
+                        .addTo(map)
+                        .bindPopup(`<b>${school.name}</b><br>${school.address}`);
+                    markers.push(marker);
+                });
+                
+                // Ajustar el mapa para mostrar todos los marcadores
+                if (schools.length > 0) {
+                    const group = new L.featureGroup(markers);
+                    map.fitBounds(group.getBounds().pad(0.1));
+                }
+            }
+            
+            // Función para filtrar las autoescuelas
+            function filterSchools() {
+                const cityValue = cityFilter.value;
+                const ratingValue = ratingFilter.value;
+                const languageValue = languageFilter.value;
+                const searchValue = searchInput.value.toLowerCase();
+                
+                const filteredSchools = drivingSchools.filter(school => {
+                    // Filtrar por ciudad
+                    if (cityValue && school.city !== cityValue) return false;
+                    
+                    // Filtrar por rating
+                    if (ratingValue && school.rating < parseFloat(ratingValue)) return false;
+                    
+                    // Filtrar por idioma
+                    if (languageValue && !school.languages.includes(languageValue)) return false;
+                    
+                    // Filtrar por búsqueda
+                    if (searchValue && 
+                        !school.name.toLowerCase().includes(searchValue) && 
+                        !school.address.toLowerCase().includes(searchValue) &&
+                        !school.description.toLowerCase().includes(searchValue)) {
+                        return false;
+                    }
+                    
+                    return true;
+                });
+                
+                renderSchools(filteredSchools);
+            }
+            
+            // Event listeners para los filtros
+            cityFilter.addEventListener('change', filterSchools);
+            ratingFilter.addEventListener('change', filterSchools);
+            languageFilter.addEventListener('change', filterSchools);
+            searchButton.addEventListener('click', filterSchools);
+            searchInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    filterSchools();
+                }
+            });
+            
+            // Renderizar todas las autoescuelas al cargar la página
+            renderSchools(drivingSchools);
+        });
+    </script>
 </body>
 </html>

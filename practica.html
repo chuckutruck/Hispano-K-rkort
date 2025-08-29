@@ -3,9 +3,586 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prácticas - Hispano Körkort</title>
+    <title>Curso de Conducción - Hispano Körkort</title>
     <link rel="stylesheet" href="recursos/estilos/base.css">
     <link rel="stylesheet" href="recursos/estilos/practicas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Orbitron:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005ea2;
+            --secondary: #00b4d8;
+            --accent: #7b2cbf;
+            --accent-alt: #ff9e00;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #f8f9fa;
+            --success: #00cc88;
+            --warning: #ffd166;
+            --danger: #ff6b6b;
+            --neutral: #6c757d;
+            
+            --glow-primary: 0 0 10px rgba(0, 180, 216, 0.7);
+            --glow-accent: 0 0 10px rgba(123, 44, 191, 0.7);
+            --glow-success: 0 0 10px rgba(0, 204, 136, 0.7);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        .header {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 180, 216, 0.2);
+        }
+        
+        .header__container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header__logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header__logo-link {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: var(--glow-primary);
+        }
+        
+        .header__logo-link::before {
+            content: "🚗";
+            font-size: 1.5rem;
+        }
+        
+        .header__toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .nav__list {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        .nav__link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav__link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 180, 216, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .nav__link:hover {
+            color: var(--secondary);
+            box-shadow: var(--glow-primary);
+        }
+        
+        .nav__link:hover::before {
+            left: 100%;
+        }
+        
+        .btn-logout {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid var(--danger);
+        }
+        
+        .btn-logout:hover {
+            background: rgba(255, 107, 107, 0.4);
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.7);
+        }
+        
+        /* Main Content */
+        .course-hero {
+            text-align: center;
+            padding: 60px 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23005ea2" fill-opacity="0.2" d="M0,128L48,117.3C96,107,192,85,288,112C384,139,480,213,576,218.7C672,224,768,160,864,138.7C960,117,1056,139,1152,149.3C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom no-repeat, 
+                        radial-gradient(circle at top right, rgba(123, 44, 191, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at bottom left, rgba(0, 180, 216, 0.2) 0%, transparent 50%);
+            background-size: 100%, 500px 500px, 500px 500px;
+        }
+        
+        .course-hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(0, 180, 216, 0.5);
+        }
+        
+        .course-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #ccc;
+        }
+        
+        .user-progress {
+            background: rgba(18, 18, 18, 0.6);
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .level-badge {
+            background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            border-radius: 6px;
+            width: 35%; /* This would be dynamic */
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: progressGlow 1.5s infinite;
+        }
+        
+        @keyframes progressGlow {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .achievements {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .achievement {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .achievement.earned {
+            background: rgba(0, 204, 136, 0.2);
+            border-color: var(--success);
+            box-shadow: var(--glow-success);
+        }
+        
+        /* Course Modules Grid */
+        .course-modules {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+        
+        .module-card {
+            background: rgba(18, 18, 18, 0.6);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            height: 380px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: var(--secondary);
+        }
+        
+        .module-image {
+            height: 160px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .module-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .module-card:hover .module-image img {
+            transform: scale(1.05);
+        }
+        
+        .module-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: var(--glow-accent);
+        }
+        
+        .module-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .module-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .module-description {
+            color: #ccc;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .module-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #999;
+        }
+        
+        .module-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn--primary {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+        }
+        
+        .btn--primary:hover {
+            box-shadow: var(--glow-primary);
+            transform: translateY(-2px);
+        }
+        
+        .btn--secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .btn--secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Simulators Section */
+        .simulators-section {
+            padding: 40px 0 80px;
+        }
+        
+        .simulators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .simulator-card {
+            background: rgba(18, 18, 18, 0.6);
+            border-radius: 15px;
+            overflow: hidden;
+            padding: 25px;
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .simulator-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(0, 180, 216, 0.1), transparent 70%);
+            z-index: 0;
+        }
+        
+        .simulator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: var(--secondary);
+        }
+        
+        .simulator-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            text-align: center;
+        }
+        
+        .simulator-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .simulator-description {
+            color: #ccc;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .simulator-features {
+            margin-bottom: 20px;
+        }
+        
+        .simulator-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .simulator-feature i {
+            color: var(--success);
+        }
+        
+        .btn--accent {
+            background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+            color: white;
+        }
+        
+        .btn--accent:hover {
+            box-shadow: var(--glow-accent);
+            transform: translateY(-2px);
+        }
+        
+        /* Footer */
+        .footer {
+            background: rgba(10, 10, 10, 0.9);
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid rgba(0, 180, 216, 0.2);
+        }
+        
+        .footer__container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .footer p {
+            color: #999;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--secondary);
+            box-shadow: var(--glow-primary);
+            transform: translateY(-3px);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .modules-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header__toggle {
+                display: block;
+            }
+            
+            .nav {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 250px;
+                height: calc(100vh - 70px);
+                background: rgba(10, 10, 10, 0.95);
+                backdrop-filter: blur(10px);
+                transition: all 0.3s ease;
+                border-left: 1px solid rgba(0, 180, 216, 0.2);
+            }
+            
+            .nav--active {
+                right: 0;
+            }
+            
+            .nav__list {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            .course-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .simulators-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .course-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -15,7 +592,7 @@
             </div>
 
             <button class="header__toggle" aria-label="Abrir menú" aria-controls="nav-menu" aria-expanded="false">
-                ☰
+                <i class="fas fa-bars"></i>
             </button>
 
             <nav class="nav" id="nav-menu">
@@ -30,34 +607,339 @@
         </div>
     </header>
 
-    <main class="practice-container container">
-        <section class="quiz-section">
-            <h2>Simulacro de Examen</h2>
-            <div id="quiz-progress"></div>
-            <div id="question-container">
-                <div id="question"></div>
-                <div id="options-container" class="options-grid"></div>
-            </div>
-            <div class="quiz-actions">
-                <button id="btnPrevious" class="btn btn--secondary">Anterior</button>
-                <button id="btnNext" class="btn btn--primary">Siguiente</button>
-                <button id="btnSubmit" class="btn btn--accent">Finalizar Examen</button>
+    <main>
+        <section class="course-hero">
+            <div class="container">
+                <h1>Curso de Conducción Sueca</h1>
+                <p>Domina las normas de tráfico suecas con nuestro curso interactivo y obtén tu licencia de conducir</p>
+                
+                <div class="user-progress">
+                    <div class="progress-header">
+                        <h3>Tu Progreso</h3>
+                        <div class="level-badge">
+                            <i class="fas fa-level-up-alt"></i>
+                            <span>Nivel 3</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 35%;"></div>
+                    </div>
+                    <div class="progress-details">
+                        <span>35% Completado</span>
+                        <span>7/20 Logros</span>
+                    </div>
+                    <div class="achievements">
+                        <div class="achievement earned"><i class="fas fa-award"></i></div>
+                        <div class="achievement earned"><i class="fas fa-award"></i></div>
+                        <div class="achievement earned"><i class="fas fa-award"></i></div>
+                        <div class="achievement"><i class="fas fa-award"></i></div>
+                        <div class="achievement"><i class="fas fa-award"></i></div>
+                    </div>
+                </div>
             </div>
         </section>
-
-        <aside class="stats-panel">
-            <h3>Tu Progreso</h3>
-            <div id="user-stats"></div>
-        </aside>
+        
+        <section class="course-modules">
+            <div class="container">
+                <h2 class="section-title">Módulos del Curso</h2>
+                
+                <div class="modules-grid">
+                    <!-- Tema 1 -->
+                    <div class="module-card">
+                        <div class="module-image">
+                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='160' viewBox='0 0 300 160'><rect width='300' height='160' fill='%23005ea2'/><text x='150' y='80' font-family='Arial' font-size='18' fill='white' text-anchor='middle'>Introducción a la Conducción en Suecia</text></svg>" alt="Introducción a la Conducción en Suecia">
+                            <div class="module-badge">1</div>
+                        </div>
+                        <div class="module-content">
+                            <h3 class="module-title">Introducción</h3>
+                            <p class="module-description">Conoce el sistema de licencias sueco, documentación requerida y requisitos básicos para hispanohablantes.</p>
+                            <div class="module-stats">
+                                <span><i class="far fa-clock"></i> 45 min</span>
+                                <span><i class="far fa-check-circle"></i> 5/8 completado</span>
+                            </div>
+                            <div class="module-actions">
+                                <button class="btn btn--primary">Continuar</button>
+                                <button class="btn btn--secondary"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tema 2 -->
+                    <div class="module-card">
+                        <div class="module-image">
+                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='160' viewBox='0 0 300 160'><rect width='300' height='160' fill='%23005ea2'/><text x='150' y='80' font-family='Arial' font-size='18' fill='white' text-anchor='middle'>Normas Básicas de Tráfico</text></svg>" alt="Normas Básicas de Tráfico">
+                            <div class="module-badge">2</div>
+                        </div>
+                        <div class="module-content">
+                            <h3 class="module-title">Normas Básicas</h3>
+                            <p class="module-description">Aprende las reglas fundamentales de circulación, prioridades y comportamiento en la vía pública.</p>
+                            <div class="module-stats">
+                                <span><i class="far fa-clock"></i> 1h 20min</span>
+                                <span><i class="far fa-check-circle"></i> 3/10 completado</span>
+                            </div>
+                            <div class="module-actions">
+                                <button class="btn btn--primary">Continuar</button>
+                                <button class="btn btn--secondary"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tema 3 -->
+                    <div class="module-card">
+                        <div class="module-image">
+                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='160' viewBox='0 0 300 160'><rect width='300' height='160' fill='%23005ea2'/><text x='150' y='80' font-family='Arial' font-size='18' fill='white' text-anchor='middle'>Señales de Tráfico</text></svg>" alt="Señales de Tráfico">
+                            <div class="module-badge">3</div>
+                        </div>
+                        <div class="module-content">
+                            <h3 class="module-title">Señales de Tráfico</h3>
+                            <p class="module-description">Domina el sistema de señalización sueco: preventivas, restrictivas, informativas y de orientación.</p>
+                            <div class="module-stats">
+                                <span><i class="far fa-clock"></i> 2h 15min</span>
+                                <span><i class="far fa-check-circle"></i> 0/12 completado</span>
+                            </div>
+                            <div class="module-actions">
+                                <button class="btn btn--primary">Comenzar</button>
+                                <button class="btn btn--secondary"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tema 4 -->
+                    <div class="module-card">
+                        <div class="module-image">
+                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='160' viewBox='0 0 300 160'><rect width='300' height='160' fill='%23005ea2'/><text x='150' y='80' font-family='Arial' font-size='18' fill='white' text-anchor='middle'>Intersecciones y Prioridades</text></svg>" alt="Intersecciones y Prioridades">
+                            <div class="module-badge">4</div>
+                        </div>
+                        <div class="module-content">
+                            <h3 class="module-title">Intersecciones</h3>
+                            <p class="module-description">Aprende a manejar cruces, glorietas y la aplicación de la regla de prioridad a la derecha.</p>
+                            <div class="module-stats">
+                                <span><i class="far fa-clock"></i> 1h 30min</span>
+                                <span><i class="far fa-check-circle"></i> 0/9 completado</span>
+                            </div>
+                            <div class="module-actions">
+                                <button class="btn btn--primary">Comenzar</button>
+                                <button class="btn btn--secondary"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tema 5 -->
+                    <div class="module-card">
+                        <div class="module-image">
+                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='160' viewBox='0 0 300 160'><rect width='300' height='160' fill='%23005ea2'/><text x='150' y='80' font-family='Arial' font-size='18' fill='white' text-anchor='middle'>Maniobras y Cambios de Dirección</text></svg>" alt="Maniobras y Cambios de Dirección">
+                            <div class="module-badge">5</div>
+                        </div>
+                        <div class="module-content">
+                            <h3 class="module-title">Maniobras</h3>
+                            <p class="module-description">Domina los adelantamientos, cambios de carril, giros y otras maniobras esenciales.</p>
+                            <div class="module-stats">
+                                <span><i class="far fa-clock"></i> 1h 45min</span>
+                                <span><i class="far fa-check-circle"></i> 0/11 completado</span>
+                            </div>
+                            <div class="module-actions">
+                                <button class="btn btn--primary">Comenzar</button>
+                                <button class="btn btn--secondary"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tema 6 -->
+                    <div class="module-card">
+                        <div class="module-image">
+                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='160' viewBox='0 0 300 160'><rect width='300' height='160' fill='%23005ea2'/><text x='150' y='80' font-family='Arial' font-size='18' fill='white' text-anchor='middle'>Conducción en Condiciones Adversas</text></svg>" alt="Conducción en Condiciones Adversas">
+                            <div class="module-badge">6</div>
+                        </div>
+                        <div class="module-content">
+                            <h3 class="module-title">Condiciones Adversas</h3>
+                            <p class="module-description">Prepárate para conducir con nieve, hielo, lluvia, niebla y otras condiciones peligrosas.</p>
+                            <div class="module-stats">
+                                <span><i class="far fa-clock"></i> 2h 10min</span>
+                                <span><i class="far fa-check-circle"></i> 0/14 completado</span>
+                            </div>
+                            <div class="module-actions">
+                                <button class="btn btn--primary">Comenzar</button>
+                                <button class="btn btn--secondary"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tema 7 -->
+                    <div class="module-card">
+                        <div class="module-image">
+                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='160' viewBox='0 0 300 160'><rect width='300' height='160' fill='%23005ea2'/><text x='150' y='80' font-family='Arial' font-size='18' fill='white' text-anchor='middle'>Seguridad Vial y Vehículo</text></svg>" alt="Seguridad Vial y Vehículo">
+                            <div class="module-badge">7</div>
+                        </div>
+                        <div class="module-content">
+                            <h3 class="module-title">Seguridad Vial</h3>
+                            <p class="module-description">Conoce los sistemas de seguridad, mantenimiento del vehículo y protocolos de emergencia.</p>
+                            <div class="module-stats">
+                                <span><i class="far fa-clock"></i> 1h 30min</span>
+                                <span><i class="far fa-check-circle"></i> 0/8 completado</span>
+                            </div>
+                            <div class="module-actions">
+                                <button class="btn btn--primary">Comenzar</button>
+                                <button class="btn btn--secondary"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tema 8 -->
+                    <div class="module-card">
+                        <div class="module-image">
+                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='160' viewBox='0 0 300 160'><rect width='300' height='160' fill='%23005ea2'/><text x='150' y='80' font-family='Arial' font-size='18' fill='white' text-anchor='middle'>Normas Especiales y Medio Ambiente</text></svg>" alt="Normas Especiales y Medio Ambiente">
+                            <div class="module-badge">8</div>
+                        </div>
+                        <div class="module-content">
+                            <h3 class="module-title">Normas Especiales</h3>
+                            <p class="module-description">Aprende sobre transporte de carga, pasajeros, vehículos especiales y conducción ecológica.</p>
+                            <div class="module-stats">
+                                <span><i class="far fa-clock"></i> 1h 15min</span>
+                                <span><i class="far fa-check-circle"></i> 0/7 completado</span>
+                            </div>
+                            <div class="module-actions">
+                                <button class="btn btn--primary">Comenzar</button>
+                                <button class="btn btn--secondary"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tema 9 -->
+                    <div class="module-card">
+                        <div class="module-image">
+                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='160' viewBox='0 0 300 160'><rect width='300' height='160' fill='%23005ea2'/><text x='150' y='80' font-family='Arial' font-size='18' fill='white' text-anchor='middle'>Legislación y Sanciones</text></svg>" alt="Legislación y Sanciones">
+                            <div class="module-badge">9</div>
+                        </div>
+                        <div class="module-content">
+                            <h3 class="module-title">Legislación</h3>
+                            <p class="module-description">Conoce el marco legal, sanciones, límites de alcohol y responsabilidades del conductor.</p>
+                            <div class="module-stats">
+                                <span><i class="far fa-clock"></i> 1h 30min</span>
+                                <span><i class="far fa-check-circle"></i> 0/10 completado</span>
+                            </div>
+                            <div class="module-actions">
+                                <button class="btn btn--primary">Comenzar</button>
+                                <button class="btn btn--secondary"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tema 10 -->
+                    <div class="module-card">
+                        <div class="module-image">
+                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='160' viewBox='0 0 300 160'><rect width='300' height='160' fill='%23005ea2'/><text x='150' y='80' font-family='Arial' font-size='18' fill='white' text-anchor='middle'>Preparación para el Examen</text></svg>" alt="Preparación para el Examen">
+                            <div class="module-badge">10</div>
+                        </div>
+                        <div class="module-content">
+                            <h3 class="module-title">Preparación Examen</h3>
+                            <p class="module-description">Estrategias, tips y práctica intensiva para aprobar el examen teórico y práctico.</p>
+                            <div class="module-stats">
+                                <span><i class="far fa-clock"></i> 2h 30min</span>
+                                <span><i class="far fa-check-circle"></i> 0/15 completado</span>
+                            </div>
+                            <div class="module-actions">
+                                <button class="btn btn--primary">Comenzar</button>
+                                <button class="btn btn--secondary"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="simulators-section">
+            <div class="container">
+                <h2 class="section-title">Simuladores de Examen</h2>
+                
+                <div class="simulators-grid">
+                    <!-- Simulador Básico -->
+                    <div class="simulator-card">
+                        <div class="simulator-icon">
+                            <i class="fas fa-car-side"></i>
+                        </div>
+                        <h3 class="simulator-title">Nivel Básico</h3>
+                        <p class="simulator-description">Ideal para quienes comienzan. 20 preguntas con enfoque en normas fundamentales y señales básicas.</p>
+                        <div class="simulator-features">
+                            <div class="simulator-feature">
+                                <i class="fas fa-check"></i>
+                                <span>20 preguntas</span>
+                            </div>
+                            <div class="simulator-feature">
+                                <i class="fas fa-check"></i>
+                                <span>25 minutos</span>
+                            </div>
+                            <div class="simulator-feature">
+                                <i class="fas fa-check"></i>
+                                <span>65% para aprobar</span>
+                            </div>
+                        </div>
+                        <a href="Simulator1b.html" class="btn btn--accent">Comenzar Simulador</a>
+                    </div>
+                    
+                    <!-- Simulador Intermedio -->
+                    <div class="simulator-card">
+                        <div class="simulator-icon">
+                            <i class="fas fa-road"></i>
+                        </div>
+                        <h3 class="simulator-title">Nivel Intermedio</h3>
+                        <p class="simulator-description">Para quienes ya tienen conocimientos básicos. 50 preguntas que combinan teoría y casos prácticos.</p>
+                        <div class="simulator-features">
+                            <div class="simulator-feature">
+                                <i class="fas fa-check"></i>
+                                <span>50 preguntas</span>
+                            </div>
+                            <div class="simulator-feature">
+                                <i class="fas fa-check"></i>
+                                <span>40 minutos</span>
+                            </div>
+                            <div class="simulator-feature">
+                                <i class="fas fa-check"></i>
+                                <span>70% para aprobar</span>
+                            </div>
+                        </div>
+                        <a href="Simulator2b.html" class="btn btn--accent">Comenzar Simulador</a>
+                    </div>
+                    
+                    <!-- Simulador Avanzado -->
+                    <div class="simulator-card">
+                        <div class="simulator-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h3 class="simulator-title">Examen Completo</h3>
+                        <p class="simulator-description">Simulacro del examen real. 70 preguntas con tiempo limitado y condiciones idénticas al examen oficial.</p>
+                        <div class="simulator-features">
+                            <div class="simulator-feature">
+                                <i class="fas fa-check"></i>
+                                <span>70 preguntas</span>
+                            </div>
+                            <div class="simulator-feature">
+                                <i class="fas fa-check"></i>
+                                <span>50 minutos</span>
+                            </div>
+                            <div class="simulator-feature">
+                                <i class="fas fa-check"></i>
+                                <span>65% para aprobar</span>
+                            </div>
+                        </div>
+                        <a href="Simulator3.html" class="btn btn--accent">Comenzar Simulador</a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
         <div class="footer__container container">
             <p>&copy; 2023 Hispano Körkort. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+            </div>
         </div>
     </footer>
 
-    <script type="module" src="recursos/scripts/pruebas.js"></script>
     <script>
         // Toggle menú hamburguesa
         const toggle = document.querySelector('.header__toggle');
@@ -67,6 +949,37 @@
             const expanded = toggle.getAttribute('aria-expanded') === 'true' || false;
             toggle.setAttribute('aria-expanded', !expanded);
             navMenu.classList.toggle('nav--active');
+        });
+        
+        // Animaciones de progreso (ejemplo)
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressFill = document.querySelector('.progress-fill');
+            let width = 0;
+            const targetWidth = 35; // Este valor vendría de la base de datos del usuario
+            
+            // Animación de la barra de progreso
+            const progressAnimation = setInterval(() => {
+                if (width >= targetWidth) {
+                    clearInterval(progressAnimation);
+                } else {
+                    width++;
+                    progressFill.style.width = width + '%';
+                }
+            }, 20);
+            
+            // Efectos de hover en las tarjetas
+            const moduleCards = document.querySelectorAll('.module-card');
+            moduleCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.2)';
+                    card.style.borderColor = 'var(--secondary)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.boxShadow = '';
+                    card.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                });
+            });
         });
     </script>
 </body>

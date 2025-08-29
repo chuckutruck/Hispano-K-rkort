@@ -3,8 +3,503 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contenido Teórico - Hispano Körkort</title>
+    <title>Curso de Conducción - Hispano Körkort</title>
     <link rel="stylesheet" href="../../recursos/estilos/base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-purple: #bd00ff;
+            --neon-green: #00ff9d;
+            --dark-bg: #0f1524;
+            --darker-bg: #0a0e1a;
+            --card-bg: #131d32;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --accent-gradient: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            --success-gradient: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 243, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 70%, rgba(189, 0, 255, 0.05) 0%, transparent 20%);
+            min-height: 100vh;
+        }
+
+        /* Navegación */
+        .navbar {
+            background-color: rgba(10, 14, 26, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--neon-blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-logo::before {
+            content: "🚗";
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--neon-blue);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 243, 255, 0.1);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        /* Contenido principal */
+        .content-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Filtros y búsqueda */
+        .course-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: var(--darker-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .search-box {
+            position: relative;
+            flex-grow: 1;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-primary);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent-gradient);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Grid de módulos */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .module-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: rgba(0, 243, 255, 0.2);
+        }
+
+        .module-header {
+            padding: 1.5rem 1.5rem 1rem;
+            position: relative;
+        }
+
+        .module-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            background: var(--darker-bg);
+            font-size: 1.5rem;
+        }
+
+        .module-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .module-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .module-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: auto;
+        }
+
+        .module-content {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .progress-container {
+            margin: 1rem 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .module-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--success-gradient);
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .btn-start {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            text-align: center;
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 243, 255, 0.3);
+        }
+
+        /* Sección de logros */
+        .achievements-section {
+            background: var(--darker-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: var(--neon-green);
+        }
+
+        .badges-container {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 0.5rem;
+        }
+
+        .badge {
+            flex: 0 0 auto;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .badge.locked {
+            filter: grayscale(1);
+            opacity: 0.5;
+        }
+
+        .badge.unlocked {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+        }
+
+        .badge-tooltip {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover .badge-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--darker-bg);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: var(--neon-blue);
+            font-size: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-blue);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--neon-blue);
+        }
+
+        /* Animaciones */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 243, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .course-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -21,35 +516,347 @@
     </nav>
 
     <main class="content-container">
-        <h1>Contenido Teórico</h1>
-        <div class="topics-grid">
-            <a href="tema1_conducir.html" class="topic-card">
-                <h3>Tema 1: Conducción Segura</h3>
-                <div class="progress-bar">
-                    <div class="progress-fill" data-progress="0"></div>
+        <div class="page-header">
+            <h1 class="page-title">Curso de Conducción Sueco</h1>
+            <p class="page-subtitle">Aprende las normas de tráfico suecas de forma interactiva y moderna. Consigue tu licencia de conducir con nuestro método gamificado.</p>
+        </div>
+
+        <div class="course-filters">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar módulo o tema...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active">Todos</button>
+                <button class="filter-btn">Sin comenzar</button>
+                <button class="filter-btn">En progreso</button>
+                <button class="filter-btn">Completados</button>
+            </div>
+        </div>
+
+        <div class="modules-grid">
+            <!-- Módulo 1 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon" style="color: #00f3ff;">
+                        <i class="fas fa-passport"></i>
+                    </div>
+                    <h3 class="module-title">Sistema de Licencias Sueco</h3>
+                    <p class="module-description">Introducción al sistema sueco de licencias de conducir y requisitos para hispanohablantes.</p>
+                    <div class="module-stats">
+                        <span><i class="far fa-file-alt"></i> 5 lecciones</span>
+                        <span><i class="far fa-clock"></i> 45 min</span>
+                    </div>
                 </div>
-            </a>
-            <a href="tema2_vehiculo.html" class="topic-card">
-                <h3>Tema 2: El Vehículo</h3>
-                <div class="progress-bar">
-                    <div class="progress-fill" data-progress="0"></div>
+                <div class="module-content">
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Progreso</span>
+                            <span data-progress="0">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="0" style="width: 0%; background: var(--accent-gradient);"></div>
+                        </div>
+                    </div>
+                    <button class="btn-start">Comenzar Módulo</button>
                 </div>
-            </a>
-            <a href="tema3_persona.html" class="topic-card">
-                <h3>Tema 3: Factor Humano</h3>
-                <div class="progress-bar">
-                    <div class="progress-fill" data-progress="0"></div>
+            </div>
+
+            <!-- Módulo 2 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon" style="color: #bd00ff;">
+                        <i class="fas fa-traffic-light"></i>
+                    </div>
+                    <h3 class="module-title">Normas de Circulación</h3>
+                    <p class="module-description">Prioridades, glorietas, uso de luces y cultura de conducción sueca.</p>
+                    <div class="module-stats">
+                        <span><i class="far fa-file-alt"></i> 6 lecciones</span>
+                        <span><i class="far fa-clock"></i> 55 min</span>
+                    </div>
                 </div>
-            </a>
-            <a href="tema4_entorno.html" class="topic-card">
-                <h3>Tema 4: Entorno Vial</h3>
-                <div class="progress-bar">
-                    <div class="progress-fill" data-progress="0"></div>
+                <div class="module-content">
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Progreso</span>
+                            <span data-progress="0">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="0" style="width: 0%; background: var(--accent-gradient);"></div>
+                        </div>
+                    </div>
+                    <button class="btn-start">Comenzar Módulo</button>
                 </div>
-            </a>
+            </div>
+
+            <!-- Módulo 3 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon" style="color: #00ff9d;">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3 class="module-title">Velocidad y Seguridad</h3>
+                    <p class="module-description">Límites de velocidad, distancia de seguridad y técnicas de frenado.</p>
+                    <div class="module-stats">
+                        <span><i class="far fa-file-alt"></i> 4 lecciones</span>
+                        <span><i class="far fa-clock"></i> 35 min</span>
+                    </div>
+                </div>
+                <div class="module-content">
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Progreso</span>
+                            <span data-progress="0">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="0" style="width: 0%; background: var(--accent-gradient);"></div>
+                        </div>
+                    </div>
+                    <button class="btn-start">Comenzar Módulo</button>
+                </div>
+            </div>
+
+            <!-- Módulo 4 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon" style="color: #ff00c8;">
+                        <i class="fas fa-snowflake"></i>
+                    </div>
+                    <h3 class="module-title">Conducción Invernal</h3>
+                    <p class="module-description">Neumáticos de invierno, técnicas especiales y equipamiento obligatorio.</p>
+                    <div class="module-stats">
+                        <span><i class="far fa-file-alt"></i> 5 lecciones</span>
+                        <span><i class="far fa-clock"></i> 50 min</span>
+                    </div>
+                </div>
+                <div class="module-content">
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Progreso</span>
+                            <span data-progress="0">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="0" style="width: 0%; background: var(--accent-gradient);"></div>
+                        </div>
+                    </div>
+                    <button class="btn-start">Comenzar Módulo</button>
+                </div>
+            </div>
+
+            <!-- Módulo 5 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon" style="color: #ff9900;">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <h3 class="module-title">Seguridad y Pasajeros</h3>
+                    <p class="module-description">Sistemas de retención, transporte de niños y elementos de seguridad.</p>
+                    <div class="module-stats">
+                        <span><i class="far fa-file-alt"></i> 4 lecciones</span>
+                        <span><i class="far fa-clock"></i> 40 min</span>
+                    </div>
+                </div>
+                <div class="module-content">
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Progreso</span>
+                            <span data-progress="0">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="0" style="width: 0%; background: var(--accent-gradient);"></div>
+                        </div>
+                    </div>
+                    <button class="btn-start">Comenzar Módulo</button>
+                </div>
+            </div>
+
+            <!-- Módulo 6 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon" style="color: #f72585;">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3 class="module-title">Aspectos Legales</h3>
+                    <p class="module-description">Límites legales, consecuencias y tolerancia cero en Suecia.</p>
+                    <div class="module-stats">
+                        <span><i class="far fa-file-alt"></i> 3 lecciones</span>
+                        <span><i class="far fa-clock"></i> 30 min</span>
+                    </div>
+                </div>
+                <div class="module-content">
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Progreso</span>
+                            <span data-progress="0">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="0" style="width: 0%; background: var(--accent-gradient);"></div>
+                        </div>
+                    </div>
+                    <button class="btn-start">Comenzar Módulo</button>
+                </div>
+            </div>
+
+            <!-- Módulo 7 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon" style="color: #4cc9f0;">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="module-title">Conducción Eficiente</h3>
+                    <p class="module-description">Ahorro de combustible, impacto ambiental y evaluación de eficiencia.</p>
+                    <div class="module-stats">
+                        <span><i class="far fa-file-alt"></i> 4 lecciones</span>
+                        <span><i class="far fa-clock"></i> 40 min</span>
+                    </div>
+                </div>
+                <div class="module-content">
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Progreso</span>
+                            <span data-progress="0">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="0" style="width: 0%; background: var(--accent-gradient);"></div>
+                        </div>
+                    </div>
+                    <button class="btn-start">Comenzar Módulo</button>
+                </div>
+            </div>
+
+            <!-- Módulo 8 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon" style="color: #560bad;">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3 class="module-title">Situaciones Especiales</h3>
+                    <p class="module-description">Remolques, vehículos de emergencia e interacción con vehículos pesados.</p>
+                    <div class="module-stats">
+                        <span><i class="far fa-file-alt"></i> 4 lecciones</span>
+                        <span><i class="far fa-clock"></i> 45 min</span>
+                    </div>
+                </div>
+                <div class="module-content">
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Progreso</span>
+                            <span data-progress="0">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="0" style="width: 0%; background: var(--accent-gradient);"></div>
+                        </div>
+                    </div>
+                    <button class="btn-start">Comenzar Módulo</button>
+                </div>
+            </div>
+
+            <!-- Módulo 9 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon" style="color: #f72585;">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="module-title">Preparación Examen</h3>
+                    <p class="module-description">Estructura del examen oficial y estrategias de estudio efectivas.</p>
+                    <div class="module-stats">
+                        <span><i class="far fa-file-alt"></i> 3 lecciones</span>
+                        <span><i class="far fa-clock"></i> 35 min</span>
+                    </div>
+                    <div class="module-badge pulse">Nuevo</div>
+                </div>
+                <div class="module-content">
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Progreso</span>
+                            <span data-progress="0">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="0" style="width: 0%; background: var(--accent-gradient);"></div>
+                        </div>
+                    </div>
+                    <button class="btn-start">Comenzar Módulo</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="achievements-section">
+            <h2 class="section-title"><i class="fas fa-trophy"></i> Logros y Insignias</h2>
+            <div class="badges-container">
+                <div class="badge locked" style="color: #a0aec0;">
+                    <i class="fas fa-question"></i>
+                    <div class="badge-tooltip">Completa tu primer módulo</div>
+                </div>
+                <div class="badge locked" style="color: #a0aec0;">
+                    <i class="fas fa-snowflake"></i>
+                    <div class="badge-tooltip">Especialista en conducción invernal</div>
+                </div>
+                <div class="badge locked" style="color: #a0aec0;">
+                    <i class="fas fa-brain"></i>
+                    <div class="badge-tooltip">Examen teórico aprobado</div>
+                </div>
+                <div class="badge locked" style="color: #a0aec0;">
+                    <i class="fas fa-bolt"></i>
+                    <div class="badge-tooltip">Rápido aprendiz</div>
+                </div>
+                <div class="badge locked" style="color: #a0aec0;">
+                    <i class="fas fa-star"></i>
+                    <div class="badge-tooltip">Perfect score</div>
+                </div>
+            </div>
         </div>
     </main>
 
-    <script type="module" src="../../recursos/scripts/teoria.js"></script>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">Hispano Körkort</div>
+            <div class="footer-links">
+                <a href="#">Términos de uso</a>
+                <a href="#">Privacidad</a>
+                <a href="#">Contacto</a>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        // Simulación de progreso (en una implementación real, esto vendría de una base de datos)
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressFillers = document.querySelectorAll('.progress-fill');
+            const progressTexts = document.querySelectorAll('.progress-info span:last-child');
+            
+            // Simular carga de progreso desde almacenamiento
+            setTimeout(() => {
+                progressFillers.forEach((fill, index) => {
+                    // Valor aleatorio para demostración (0% a 30%)
+                    const progress = Math.floor(Math.random() * 30);
+                    fill.style.width = `${progress}%`;
+                    progressTexts[index].textContent = `${progress}%`;
+                    progressTexts[index].setAttribute('data-progress', progress);
+                });
+            }, 500);
+            
+            // Botones de inicio de módulo
+            const startButtons = document.querySelectorAll('.btn-start');
+            startButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    alert('¡Módulo iniciado! En una implementación real, esto te llevaría a la primera lección.');
+                });
+            });
+            
+            // Filtros
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>

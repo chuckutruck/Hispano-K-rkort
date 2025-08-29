@@ -4,11 +4,412 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Señales de Advertencia - Hispano Körkort</title>
-    <link rel="stylesheet" href="../../recursos/estilos/base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Orbitron:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005ea2;
+            --secondary: #00b4d8;
+            --accent: #7b2cbf;
+            --accent-alt: #ff9e00;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #f8f9fa;
+            --success: #00cc88;
+            --warning: #ffd166;
+            --danger: #ff6b6b;
+            --neutral: #6c757d;
+            
+            --glow-primary: 0 0 10px rgba(0, 180, 216, 0.7);
+            --glow-accent: 0 0 10px rgba(123, 44, 191, 0.7);
+            --glow-success: 0 0 10px rgba(0, 204, 136, 0.7);
+            --glow-warning: 0 0 10px rgba(255, 209, 102, 0.7);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        .navbar {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 180, 216, 0.2);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: var(--glow-primary);
+        }
+        
+        .nav-logo::before {
+            content: "🚗";
+            font-size: 1.5rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            align-items: center;
+        }
+        
+        .nav-menu a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 180, 216, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--secondary);
+            box-shadow: var(--glow-primary);
+        }
+        
+        .nav-menu a:hover::before {
+            left: 100%;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 107, 107, 0.2);
+            color: white;
+            border: 1px solid var(--danger);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 107, 107, 0.4);
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.7);
+        }
+        
+        /* Main Content */
+        .signs-container {
+            padding: 40px 0;
+        }
+        
+        .signs-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .signs-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(0, 180, 216, 0.5);
+        }
+        
+        .signs-header p {
+            font-size: 1.2rem;
+            color: #ccc;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Warning Banner */
+        .warning-banner {
+            background: linear-gradient(135deg, rgba(255, 209, 102, 0.15), rgba(255, 209, 102, 0.05));
+            border: 1px solid rgba(255, 209, 102, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .warning-icon {
+            font-size: 2.5rem;
+            color: var(--warning);
+            flex-shrink: 0;
+        }
+        
+        .warning-text {
+            flex-grow: 1;
+        }
+        
+        .warning-text h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--warning);
+            margin-bottom: 10px;
+        }
+        
+        /* Signs Grid */
+        .signs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .sign-card {
+            background: rgba(18, 18, 18, 0.6);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .sign-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: var(--warning);
+        }
+        
+        .sign-image {
+            height: 180px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+        
+        .sign-image img {
+            max-width: 100%;
+            max-height: 140px;
+            object-fit: contain;
+        }
+        
+        .sign-content {
+            padding: 20px;
+        }
+        
+        .sign-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--warning);
+        }
+        
+        .sign-content p {
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+        
+        .sign-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--warning);
+            color: var(--dark);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        /* Quiz Section */
+        .signs-quiz {
+            background: rgba(18, 18, 18, 0.6);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(0, 180, 216, 0.3);
+        }
+        
+        .signs-quiz h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--secondary);
+        }
+        
+        #quiz-container {
+            margin-bottom: 25px;
+        }
+        
+        .quiz-placeholder {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 40px 0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: var(--glow-primary);
+            transform: translateY(-2px);
+        }
+        
+        /* Quiz Styles (when active) */
+        .quiz-question {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .quiz-image {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .quiz-image img {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 8px;
+        }
+        
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .quiz-option:hover {
+            background: rgba(0, 180, 216, 0.2);
+            border-color: var(--secondary);
+        }
+        
+        .quiz-option.correct {
+            background: rgba(0, 204, 136, 0.2);
+            border-color: var(--success);
+        }
+        
+        .quiz-option.incorrect {
+            background: rgba(255, 107, 107, 0.2);
+            border-color: var(--danger);
+        }
+        
+        .quiz-result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(0, 180, 216, 0.1);
+            border: 1px solid var(--secondary);
+            text-align: center;
+        }
+        
+        .quiz-actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .warning-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .signs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .nav-menu {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .signs-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
-        <div class="nav-container">
+        <div class="nav-container container">
             <a href="../index.html" class="nav-logo">Hispano Körkort</a>
             <div class="nav-menu">
                 <a href="../practica.html">Prácticas</a>
@@ -20,43 +421,304 @@
         </div>
     </nav>
 
-    <main class="signs-container">
-        <h1>Señales de Advertencia</h1>
-        <p>Estas señales alertan sobre peligros potenciales en la vía</p>
+    <main class="signs-container container">
+        <div class="signs-header">
+            <h1>Señales de Advertencia</h1>
+            <p>Estas señales alertan sobre peligros potenciales en la vía. Reconocerlas te ayudará a anticipar situaciones de riesgo.</p>
+        </div>
+        
+        <div class="warning-banner">
+            <div class="warning-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="warning-text">
+                <h3>¡Importante!</h3>
+                <p>Las señales de advertencia suelen ser triangulares con fondo amarillo y borde rojo. Su propósito es alertarte sobre condiciones peligrosas más adelante en la carretera.</p>
+            </div>
+        </div>
         
         <div class="signs-grid">
             <div class="sign-card">
-                <div class="sign-image warning-1"></div>
-                <h3>Curva peligrosa a la izquierda</h3>
-                <p>Advierte sobre una curva cerrada hacia la izquierda</p>
+                <div class="sign-number">1</div>
+                <div class="sign-image">
+                    <img src="https://chuckutruck.github.io/Hispano-Korkort/recursos/imagenes/A1-1.png" alt="Curva peligrosa a la izquierda">
+                </div>
+                <div class="sign-content">
+                    <h3>Curva peligrosa a la izquierda</h3>
+                    <p>Advierte sobre una curva cerrada hacia la izquierda. Reduce la velocidad y mantén tu carril.</p>
+                    <p><strong>Color:</strong> Amarillo con borde rojo</p>
+                </div>
             </div>
             
             <div class="sign-card">
-                <div class="sign-image warning-2"></div>
-                <h3>Curva peligrosa a la derecha</h3>
-                <p>Advierte sobre una curva cerrada hacia la derecha</p>
+                <div class="sign-number">2</div>
+                <div class="sign-image">
+                    <img src="https://chuckutruck.github.io/Hispano-Korkort/recursos/imagenes/A1-2.png" alt="Curva peligrosa a la derecha">
+                </div>
+                <div class="sign-content">
+                    <h3>Curva peligrosa a la derecha</h3>
+                    <p>Advierte sobre una curva cerrada hacia la derecha. Reduce la velocidad y mantén tu carril.</p>
+                    <p><strong>Color:</strong> Amarillo con borde rojo</p>
+                </div>
             </div>
             
             <div class="sign-card">
-                <div class="sign-image warning-3"></div>
-                <h3>Camino resbaladizo</h3>
-                <p>Indica que el pavimento puede estar resbaloso</p>
+                <div class="sign-number">3</div>
+                <div class="sign-image">
+                    <img src="https://chuckutruck.github.io/Hispano-Korkort/recursos/imagenes/A3.png" alt="Camino resbaladizo">
+                </div>
+                <div class="sign-content">
+                    <h3>Camino resbaladizo</h3>
+                    <p>Indica que el pavimento puede estar resbaloso debido a condiciones climáticas o derrames.</p>
+                    <p><strong>Color:</strong> Amarillo con borde rojo</p>
+                </div>
             </div>
             
             <div class="sign-card">
-                <div class="sign-image warning-4"></div>
-                <h3>Zona de peatones</h3>
-                <p>Advierte sobre posible presencia de peatones</p>
+                <div class="sign-number">4</div>
+                <div class="sign-image">
+                    <img src="https://chuckutruck.github.io/Hispano-Korkort/recursos/imagenes/A17.png" alt="Zona de peatones">
+                </div>
+                <div class="sign-content">
+                    <h3>Zona de peatones</h3>
+                    <p>Advierte sobre posible presencia de peatones cruzando la vía. Reduce velocidad y mantente alerta.</p>
+                    <p><strong>Color:</strong> Amarillo con borde rojo</p>
+                </div>
+            </div>
+            
+            <div class="sign-card">
+                <div class="sign-number">5</div>
+                <div class="sign-image">
+                    <img src="https://chuckutruck.github.io/Hispano-Korkort/recursos/imagenes/A25.png" alt="Intersección con prioridad">
+                </div>
+                <div class="sign-content">
+                    <h3>Intersección con prioridad</h3>
+                    <p>Indica que te aproximas a una intersección donde tienes prioridad de paso.</p>
+                    <p><strong>Color:</strong> Amarillo con borde rojo</p>
+                </div>
+            </div>
+            
+            <div class="sign-card">
+                <div class="sign-number">6</div>
+                <div class="sign-image">
+                    <img src="https://chuckutruck.github.io/Hispano-Korkort/recursos/imagenes/A27.png" alt="Semáforos adelante">
+                </div>
+                <div class="sign-content">
+                    <h3>Semáforos adelante</h3>
+                    <p>Advierte sobre la presencia de semáforos más adelante. Prepárate para detenerte si es necesario.</p>
+                    <p><strong>Color:</strong> Amarillo con borde rojo</p>
+                </div>
+            </div>
+            
+            <div class="sign-card">
+                <div class="sign-number">7</div>
+                <div class="sign-image">
+                    <img src="https://chuckutruck.github.io/Hispano-Korkort/recursos/imagenes/A11.png" alt="Paso a nivel con barreras">
+                </div>
+                <div class="sign-content">
+                    <h3>Paso a nivel con barreras</h3>
+                    <p>Advierte sobre un cruce ferroviario con barreras. Nunca intentes cruzar cuando las barreras estén bajadas.</p>
+                    <p><strong>Color:</strong> Amarillo con borde rojo</p>
+                </div>
+            </div>
+            
+            <div class="sign-card">
+                <div class="sign-number">8</div>
+                <div class="sign-image">
+                    <img src="https://chuckutruck.github.io/Hispano-Korkort/recursos/imagenes/A5.png" alt="Estrechamiento de calzada">
+                </div>
+                <div class="sign-content">
+                    <h3>Estrechamiento de calzada</h3>
+                    <p>Advierte que la carretera se estrecha. Prepárate para reducir velocidad y ceder el paso si es necesario.</p>
+                    <p><strong>Color:</strong> Amarillo con borde rojo</p>
+                </div>
             </div>
         </div>
 
         <div class="signs-quiz">
             <h2>Test de Señales de Advertencia</h2>
-            <div id="quiz-container"></div>
-            <button id="start-quiz" class="btn-primary">Comenzar Test</button>
+            <div id="quiz-container">
+                <p class="quiz-placeholder">Haz clic en comenzar para poner a prueba tus conocimientos sobre señales de advertencia</p>
+            </div>
+            <div class="quiz-actions">
+                <button id="start-quiz" class="btn-primary">
+                    <i class="fas fa-play"></i> Comenzar Test
+                </button>
+            </div>
         </div>
     </main>
 
-    <script type="module" src="../../recursos/scripts/utilidades.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startQuizBtn = document.getElementById('start-quiz');
+            const quizContainer = document.getElementById('quiz-container');
+            
+            // Datos del quiz basados en las señales de advertencia
+            const quizData = [
+                {
+                    question: "¿Qué indica esta señal?",
+                    image: "https://chuckutruck.github.io/Hispano-Korkort/recursos/imagenes/A1-1.png",
+                    options: [
+                        { text: "Curva peligrosa a la izquierda", correct: true },
+                        { text: "Curva peligrosa a la derecha", correct: false },
+                        { text: "Camino resbaladizo", correct: false },
+                        { text: "Prohibido girar a la izquierda", correct: false }
+                    ]
+                },
+                {
+                    question: "¿Qué debes hacer al ver esta señal?",
+                    image: "https://chuckutruck.github.io/Hispano-Korkort/recursos/imagenes/A17.png",
+                    options: [
+                        { text: "Acelerar para pasar rápido", correct: false },
+                        { text: "Reducir velocidad y estar alerta a peatones", correct: true },
+                        { text: "Tocar el claxon continuamente", correct: false },
+                        { text: "Cambiar de carril inmediatamente", correct: false }
+                    ]
+                },
+                {
+                    question: "¿Qué indica esta señal?",
+                    image: "https://chuckutruck.github.io/Hispano-Korkort/recursos/imagenes/A3.png",
+                    options: [
+                        { text: "Camino en reparación", correct: false },
+                        { text: "Camino resbaladizo", correct: true },
+                        { text: "Zona de derrumbes", correct: false },
+                        { text: "Prohibido el paso", correct: false }
+                    ]
+                },
+                {
+                    question: "¿Qué color tienen las señales de advertencia en Suecia?",
+                    options: [
+                        { text: "Blanco con borde rojo", correct: false },
+                        { text: "Azul con símbolos blancos", correct: false },
+                        { text: "Amarillo con borde rojo", correct: true },
+                        { text: "Rojo con símbolos blancos", correct: false }
+                    ]
+                }
+            ];
+            
+            let currentQuestion = 0;
+            let score = 0;
+            
+            startQuizBtn.addEventListener('click', startQuiz);
+            
+            function startQuiz() {
+                currentQuestion = 0;
+                score = 0;
+                startQuizBtn.style.display = 'none';
+                showQuestion();
+            }
+            
+            function showQuestion() {
+                if (currentQuestion >= quizData.length) {
+                    showResults();
+                    return;
+                }
+                
+                const question = quizData[currentQuestion];
+                let quizHTML = `
+                    <div class="quiz-question">${question.question}</div>
+                `;
+                
+                if (question.image) {
+                    quizHTML += `
+                        <div class="quiz-image">
+                            <img src="${question.image}" alt="Señal de tráfico">
+                        </div>
+                    `;
+                }
+                
+                quizHTML += `
+                    <div class="quiz-options">
+                        ${question.options.map((option, index) => `
+                            <div class="quiz-option" data-correct="${option.correct}" data-index="${index}">
+                                ${option.text}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                quizContainer.innerHTML = quizHTML;
+                
+                // Add event listeners to options
+                const options = quizContainer.querySelectorAll('.quiz-option');
+                options.forEach(option => {
+                    option.addEventListener('click', checkAnswer);
+                });
+            }
+            
+            function checkAnswer(e) {
+                const selectedOption = e.currentTarget;
+                const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+                
+                // Disable all options
+                const options = quizContainer.querySelectorAll('.quiz-option');
+                options.forEach(option => {
+                    option.removeEventListener('click', checkAnswer);
+                    if (option.getAttribute('data-correct') === 'true') {
+                        option.classList.add('correct');
+                    } else if (option === selectedOption && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                if (isCorrect) {
+                    score++;
+                }
+                
+                // Show next button
+                const nextButton = document.createElement('button');
+                nextButton.textContent = currentQuestion < quizData.length - 1 ? 'Siguiente Pregunta' : 'Ver Resultados';
+                nextButton.className = 'btn-primary';
+                nextButton.style.marginTop = '20px';
+                nextButton.addEventListener('click', nextQuestion);
+                
+                const actionsDiv = document.querySelector('.quiz-actions');
+                actionsDiv.innerHTML = '';
+                actionsDiv.appendChild(nextButton);
+            }
+            
+            function nextQuestion() {
+                currentQuestion++;
+                showQuestion();
+                
+                // Reset actions div
+                const actionsDiv = document.querySelector('.quiz-actions');
+                actionsDiv.innerHTML = '';
+            }
+            
+            function showResults() {
+                quizContainer.innerHTML = `
+                    <div class="quiz-result">
+                        <h3>Resultados del Test</h3>
+                        <p>Obtuviste ${score} de ${quizData.length} puntos</p>
+                        <p>${score >= quizData.length / 2 ? '¡Buen trabajo! Sigue practicando.' : 'Sigue estudiando, lo harás mejor la próxima vez.'}</p>
+                    </div>
+                `;
+                
+                startQuizBtn.style.display = 'inline-flex';
+                startQuizBtn.innerHTML = '<i class="fas fa-redo"></i> Intentar de Nuevo';
+                
+                const actionsDiv = document.querySelector('.quiz-actions');
+                actionsDiv.innerHTML = '';
+                actionsDiv.appendChild(startQuizBtn);
+            }
+            
+            // Efectos de hover para las tarjetas de señales
+            const signCards = document.querySelectorAll('.sign-card');
+            signCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-5px)';
+                    card.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.2)';
+                    card.style.borderColor = 'var(--warning)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                    card.style.boxShadow = '';
+                    card.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
