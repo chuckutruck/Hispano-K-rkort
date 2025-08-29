@@ -7,88 +7,111 @@
     <link rel="stylesheet" href="../recursos/estilos/base.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">
-                <h1><a href="../index.html">Hispano Körkort</a></h1>
+    <header class="header">
+        <div class="header__container container">
+            <div class="header__logo">
+                <h1>
+                    <a href="../Hispano-Korkort/index.html" class="header__logo-link">Hispano Körkort</a>
+                </h1>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="../index.html">Inicio</a></li>
-                    <li><a href="../contenido/indice.html">Contenido</a></li>
-                    <li><a href="../catalogo_senales/portada.html">Señales</a></li>
-                    <li><a href="../practica.html">Práctica</a></li>
+
+            <button class="header__toggle" aria-label="Abrir menú" aria-controls="nav-menu" aria-expanded="false">
+                ☰
+            </button>
+
+            <nav class="nav" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="../Hispano-Korkort/index.html" class="nav__link">Inicio</a></li>
+                    <li class="nav__item"><a href="../contenido/indice.html" class="nav__link">Contenido</a></li>
+                    <li class="nav__item"><a href="../catalogo_senales/portada.html" class="nav__link">Señales</a></li>
+                    <li class="nav__item"><a href="../practica.html" class="nav__link">Práctica</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main class="auth-container">
-        <div class="auth-form">
-            <h2>Acceso a la plataforma</h2>
-            <div class="tabs">
-                <button class="tab-btn active" data-tab="login">Iniciar Sesión</button>
-                <button class="tab-btn" data-tab="register">Registrarse</button>
-            </div>
+    <main class="auth">
+        <section class="auth__container container">
+            <div class="auth__form">
+                <h2 class="auth__title">Acceso a la plataforma</h2>
 
-            <div class="tab-content">
-                <div id="login-form" class="tab-pane active">
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label for="login-email">Correo electrónico</label>
-                            <input type="email" id="login-email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="login-password">Contraseña</label>
-                            <input type="password" id="login-password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full">Iniciar Sesión</button>
-                        <div class="form-footer">
-                            <a href="#" id="resetPassword">¿Olvidaste tu contraseña?</a>
-                        </div>
-                    </form>
+                <div class="auth__tabs">
+                    <button class="auth__tab-btn auth__tab-btn--active" data-tab="login">Iniciar Sesión</button>
+                    <button class="auth__tab-btn" data-tab="register">Registrarse</button>
                 </div>
 
-                <div id="register-form" class="tab-pane">
-                    <form id="registerForm">
-                        <div class="form-group">
-                            <label for="register-name">Nombre completo</label>
-                            <input type="text" id="register-name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="register-email">Correo electrónico</label>
-                            <input type="email" id="register-email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="register-password">Contraseña</label>
-                            <input type="password" id="register-password" minlength="6" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="register-confirm">Confirmar contraseña</label>
-                            <input type="password" id="register-confirm" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="checkbox">
-                                <input type="checkbox" id="register-terms" required>
-                                <span>Acepto los <a href="../ayuda/condiciones.html">términos y condiciones</a> y la <a href="../ayuda/privacidad.html">política de privacidad</a></span>
-                            </label>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full">Crear Cuenta</button>
-                    </form>
-                </div>
-            </div>
+                <div class="auth__tab-content">
+                    <!-- Login -->
+                    <div id="login" class="auth__tab-pane auth__tab-pane--active">
+                        <form id="loginForm" class="form">
+                            <div class="form__group">
+                                <label for="login-email" class="form__label">Correo electrónico</label>
+                                <input type="email" id="login-email" class="form__input" required>
+                            </div>
+                            <div class="form__group">
+                                <label for="login-password" class="form__label">Contraseña</label>
+                                <input type="password" id="login-password" class="form__input" required>
+                            </div>
+                            <button type="submit" class="btn btn--primary btn--full">Iniciar Sesión</button>
+                            <div class="form__footer">
+                                <a href="#" id="resetPassword" class="form__link">¿Olvidaste tu contraseña?</a>
+                            </div>
+                        </form>
+                    </div>
 
-            <div id="auth-message" class="message hidden"></div>
-        </div>
+                    <!-- Register -->
+                    <div id="register" class="auth__tab-pane">
+                        <form id="registerForm" class="form">
+                            <div class="form__group">
+                                <label for="register-name" class="form__label">Nombre completo</label>
+                                <input type="text" id="register-name" class="form__input" required>
+                            </div>
+                            <div class="form__group">
+                                <label for="register-email" class="form__label">Correo electrónico</label>
+                                <input type="email" id="register-email" class="form__input" required>
+                            </div>
+                            <div class="form__group">
+                                <label for="register-password" class="form__label">Contraseña</label>
+                                <input type="password" id="register-password" class="form__input" minlength="6" required>
+                            </div>
+                            <div class="form__group">
+                                <label for="register-confirm" class="form__label">Confirmar contraseña</label>
+                                <input type="password" id="register-confirm" class="form__input" required>
+                            </div>
+                            <div class="form__group form__group--checkbox">
+                                <label class="checkbox">
+                                    <input type="checkbox" id="register-terms" required>
+                                    <span>Acepto los <a href="../ayuda/condiciones.html">términos y condiciones</a> y la <a href="../ayuda/privacidad.html">política de privacidad</a></span>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn--primary btn--full">Crear Cuenta</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="auth-message" class="auth__message hidden"></div>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <div class="container">
+    <footer class="footer">
+        <div class="footer__container container">
             <p>&copy; 2023 Hispano Körkort. Todos los derechos reservados.</p>
         </div>
     </footer>
 
     <script type="module" src="../recursos/scripts/app.js"></script>
     <script type="module" src="../recursos/scripts/usuario.js"></script>
+    <script>
+        // Toggle menú hamburguesa
+        const toggle = document.querySelector('.header__toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        toggle.addEventListener('click', () => {
+            const expanded = toggle.getAttribute('aria-expanded') === 'true' || false;
+            toggle.setAttribute('aria-expanded', !expanded);
+            navMenu.classList.toggle('nav--active');
+        });
+    </script>
 </body>
 </html>
