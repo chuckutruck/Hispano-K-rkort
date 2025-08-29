@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libro Digital de Conducción en Suecia</title>
+    <style>
+        :root {
+            --primary-color: #1a5276;
+            --secondary-color: #2e86c1;
+            --accent-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #e74c3c;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar - Tabla de contenidos */
+        .sidebar {
+            width: 300px;
+            background: var(--primary-color);
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+            position: fixed;
+            height: 100vh;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .sidebar-header h2 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-header p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .chapters-list {
+            list-style: none;
+        }
+        
+        .chapters-list li {
+            margin-bottom: 10px;
+        }
+        
+        .chapters-list a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .chapters-list a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .chapters-list .sub-item {
+            margin-left: 15px;
+            font-size: 0.9rem;
+        }
+        
+        /* Main content */
+        .content {
+            flex: 1;
+            margin-left: 300px;
+            padding: 30px;
+            max-width: 900px;
+        }
+        
+        .book-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        .book-header h1 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .book-header .subtitle {
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .book-header .meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .chapter {
+            margin-bottom: 50px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .chapter h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .chapter h3 {
+            color: var(--secondary-color);
+            margin: 25px 0 15px;
+        }
+        
+        .chapter p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .chapter ul, .chapter ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .chapter li {
+            margin-bottom: 8px;
+        }
+        
+        .info-box {
+            background: #e8f4fc;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .warning-box {
+            background: #fde9e9;
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .tip-box {
+            background: #eafaf1;
+            border-left: 4px solid var(--success-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .glossary {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .glossary h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .nav-btn:hover {
+            background: var(--secondary-color);
+        }
+        
+        .toggle-sidebar {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 260px;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .content {
+                margin-left: 0;
+            }
+            
+            .toggle-sidebar {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .content {
+                padding: 20px 15px;
+            }
+            
+            .chapter {
+                padding: 20px 15px;
+            }
+            
+            .book-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .sidebar, .toggle-sidebar, .nav-buttons {
+                display: none;
+            }
+            
+            .content {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .chapter {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-sidebar" onclick="toggleSidebar()">☰ Menú</button>
+    
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Libro de Conducción Suecia</h2>
+                <p>Para hispanohablantes</p>
+            </div>
+            
+            <ul class="chapters-list">
+                <li><a href="#cap1">Capítulo 1: Introducción al sistema de licencias sueco</a>
+                    <ul>
+                        <li class="sub-item"><a href="#cap1-1">1.1 Tipos de permisos y requisitos</a></li>
+                        <li class="sub-item"><a href="#cap1-2">1.2 Proceso completo y tiempos</a></li>
+                        <li class="sub-item"><a href="#cap1-3">1.3 Documentación para hispanohablantes</a></li>
+                    </ul>
+                </li>
+                <li><a href="#cap2">Capítulo 2: Señales de tránsito en Suecia</a>
+                    <ul>
+                        <li class="sub-item"><a href="#cap2-1">2.1 Categorías de señales</a></li>
+                        <li class="sub-item"><a href="#cap2-2">2.2 Diferencias clave con países hispanohablantes</a></li>
+                        <li class="sub-item"><a href="#cap2-3">2.3 Señales temporales y obras viales</a></li>
+                    </ul>
+                </li>
+                <li><a href="#cap3">Capítulo 3: Reglas Generales de Circulación</a></li>
+                <li><a href="#cap4">Capítulo 4: Velocidades y Distancias de Seguridad</a></li>
+                <li><a href="#cap5">Capítulo 5: Clima y Conducción Invernal</a></li>
+                <li><a href="#cap6">Capítulo 6: Normas de Seguridad Vial</a></li>
+                <li><a href="#cap7">Capítulo 7: Alcohol, Drogas, Medicamentos y Fatiga</a></li>
+                <li><a href="#cap8">Capítulo 8: Conducción Ecológica</a></li>
+                <li><a href="#cap9">Capítulo 9: Transporte y Vehículos Especiales</a></li>
+                <li><a href="#cap10">Capítulo 10: Preparación para el Examen Teórico</a></li>
+                <li><a href="#cap11">Capítulo 11: Glosario Español-Sueco</a></li>
+            </ul>
+        </aside>
+        
+        <main class="content">
+            <div class="book-header">
+                <h1>Libro Digital de Conducción en Suecia para Hispanohablantes</h1>
+                <p class="subtitle">Adaptación en español del Körkortsboken sueco con ejemplos locales y explicaciones detalladas</p>
+                <div class="meta">
+                    <span><strong>Fecha de publicación:</strong> 27 de agosto de 2025</span>
+                    <span><strong>Versión:</strong> 1.0</span>
+                    <span><strong>Categoría:</strong> B (Vehículo de turismo)</span>
+                </div>
+            </div>
+            
+            <!-- Capítulo 1 -->
+            <section id="cap1" class="chapter">
+                <h2>📕 Capítulo 1: Introducción al sistema de licencias sueco</h2>
+                
+                <article id="cap1-1">
+                    <h3>1.1 Tipos de permisos y requisites</h3>
+                    <p>En Suecia, el proceso para obtener el permiso de conducción (körkort) es un sistema bien estructurado y escalonado, diseñado para garantizar que todos los conductores tengan los conocimientos y habilidades necesarias para circular de forma segura. El organismo responsable de la administración de los exámenes y la emisión de los permisos es la <strong>Administración de Transporte de Suecia (Trafikverket)</strong>.</p>
+                    
+                    <p>El primer paso fundamental es obtener el <strong>Permiso de aprendizaje (Körkortstillstånd)</strong>. Este documento es indispensable para poder comenzar la formación práctica (övningskörning) y para poder reservar los exámenes oficiales.</p>
+                    
+                    <div class="info-box">
+                        <p><strong>Requisitos para solicitar el permiso de aprendizaje:</strong></p>
+                        <ul>
+                            <li>Tener al menos 16 años cumplidos.</li>
+                            <li>Aprobar un examen de visión.</li>
+                            <li>Completar la primera parte del curso de riesgo (Riskutbildning 1).</li>
+                            <li>Presentar una identificación personal válida.</li>
+                        </ul>
+                    </div>
+                    
+                    <p>La formación se completa con la <strong>segunda parte del curso de riesgo (Riskutbildning 2)</strong>, que se realiza en una pista de hielo/deslizamiento (halkbana) y está orientada a que el conductor experimente y aprenda a controlar el vehículo en situaciones de baja adherencia.</p>
+                    
+                    <p>El camino culmina con la superación de dos exámenes oficiales:</p>
+                    <ol>
+                        <li><strong>Examen Teórico (Teoriprov):</strong> Prueba de 70 preguntas que debe aprobarse antes de poder realizar el examen práctico.</li>
+                        <li><strong>Examen Práctico (Körprov):</strong> Evaluación de conducción de aproximadamente 45 minutos con un examinador oficial.</li>
+                    </ol>
+                    
+                    <div class="warning-box">
+                        <p><strong>⚠️ Importante para hispanohablantes:</strong> Si optas por realizar el examen práctico con un vehículo de transmisión automática, tu licencia llevará una restricción (código 78) que solo te permitirá conducir este tipo de vehículos.</p>
+                    </div>
+                </article>
+                
+                <article id="cap1-2">
+                    <h3>1.2 Proceso completo y tiempos</h3>
+                    <p>El proceso completo desde el inicio hasta la obtención del permiso puede variar significativamente dependiendo de la dedicación, la frecuencia de las prácticas y la disponibilidad de citas para los exámenes en la región donde resides. Un tiempo medio estimado es de <strong>3 a 6 meses</strong>.</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Etapa</th>
+                                <th>Descripción</th>
+                                <th>Duración aproximada</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. Permiso de Aprendizaje</strong></td>
+                                <td>Trámite de solicitud, examen de visión y curso de riesgo 1.</td>
+                                <td>2 - 4 semanas</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. Formación Teórica</strong></td>
+                                <td>Estudio independiente o en autoescuela de normas, señales y seguridad vial.</td>
+                                <td>4 - 8 semanas</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. Examen Teórico</strong></td>
+                                <td>Prueba de 70 preguntas en un centro autorizado de Trafikverket.</td>
+                                <td>1 día</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. Formación Práctica</strong></td>
+                                <td>Prácticas de conducción supervisadas (con tutor privado y/o autoescuela).</td>
+                                <td>8 - 12 semanas</td>
+                            </tr>
+                            <tr>
+                                <td><strong>5. Curso de Riesgo 2</strong></td>
+                                <td>Formación práctica en halkbana (pista de deslizamiento).</td>
+                                <td>1 día</td>
+                            </tr>
+                            <tr>
+                                <td><strong>6. Examen Práctico</strong></td>
+                                <td>Evaluación de conducción real con un examinador oficial.</td>
+                                <td>1 día</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="tip-box">
+                        <p><strong>💡 Consejo:</strong> Trafikverket recomienda reservar las citas para ambos exámenes con mucha antelación, e incluso sugiere bookear el teórico y el práctico al mismo tiempo, dejando varias semanas de diferencia entre ellos.</p>
+                    </div>
+                </article>
+                
+                <article id="cap1-3">
+                    <h3>1.3 Documentación para hispanohablantes</h3>
+                    <p>Los residentes hispanohablantes que deseen obtener el permiso de conducir sueco deben preparar la siguiente documentación:</p>
+                    
+                    <ul>
+                        <li><strong>Pasaporte válido</strong> y <strong>Personbevis</strong> (certificado de empadronamiento expedido por la Agencia Tributaria Sueca - Skatteverket).</li>
+                        <li><strong>Permiso de residencia (Uppehållstillstånd)</strong> para no ciudadanos de la UE/EEE.</li>
+                        <li>Documentación médica en caso de existir condiciones de salud relevantes que deban ser declaradas.</li>
+                        <li>Si se posee un <strong>permiso de conducir extranjero</strong>, este debe ser traducido oficialmente y validado por la Transportstyrelsen.</li>
+                    </ul>
+                </article>
+            </section>
+            
+            <!-- Capítulo 2 -->
+            <section id="cap2" class="chapter">
+                <h2>📗 Capítulo 2: Señales de tránsito en Suecia</h2>
+                
+                <article id="cap2-1">
+                    <h3>2.1 Categorías de señales</h3>
+                    <p>El sistema de señales de tráfico sueco sigue en gran medida los convenios internacionales (Convención de Viena), pero incorpora particularidades locales y nórdicas muy específicas.</p>
+                    
+                    <p><strong>Señales de Advertencia de Peligro (Varningsmärken):</strong> Son triangulares con fondo amarillo y un grueso borde rojo. Ejemplos clave incluyen:</p>
+                    <ul>
+                        <li><strong>Varning för barn</strong> (Aviso de niños)</li>
+                        <li><strong>Varning för älg</strong> (Aviso de alces) / <strong>Varning för ren</strong> (Aviso de renos)</li>
+                        <li><strong>Varning för körvältsfara</strong> (Peligro de vuelco)</li>
+                        <li><strong>Halka</strong> (Pavimento deslizante)</li>
+                    </ul>
+                    
+                    <p><strong>Señales de Prohibición (Förbudsmärken):</strong> Son redondas con fondo blanco y borde rojo. Indican una acción que no está permitida. Ejemplos:</p>
+                    <ul>
+                        <li><strong>Förbud mot motorfordon</strong> (Prohibición de vehículos motorizados)</li>
+                        <li><strong>Förbud mot omkörning</strong> (Prohibido adelantar)</li>
+                        <li><strong>Infart förbjuden</strong> (Prohibido el paso)</li>
+                        <li><strong>Stoppförbud</strong> (Prohibido pararse y estacionarse)</li>
+                    </ul>
+                </article>
+                
+                <article id="cap2-2">
+                    <h3>2.2 Diferencias clave con países hispanohablantes</h3>
+                    <p>Existen varias normas y señales en Suecia que pueden resultar novedosas o diferentes para los conductores hispanohablantes:</p>
+                    
+                    <ol>
+                        <li><strong>Prioridad a la Derecha (Högerregeln):</strong> En intersecciones no señalizadas, tienes la obligación de ceder el paso a todos los vehículos que se aproximen por tu derecha.</li>
+                        <li><strong>Señales de Animales Silvestres:</strong> Las señales de alce, reno, ciervo o jabalí son frecuentes y deben tomarse muy en serio.</li>
+                        <li><strong>Uso de Luces Diurnas (Dagljus):</strong> Es obligatorio llevar las luces de cruce encendidas tanto de día como de noche, durante todo el año.</li>
+                        <li><strong>Obligatoriedad de Neumáticos de Invierno (Vinterdäck):</strong> Por ley, desde el 1 de diciembre hasta el 31 de marzo, todos los vehículos deben utilizar neumáticos de invierno si existe condición invernal en la calzada.</li>
+                    </ol>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Señal/Norma en Suecia</th>
+                                <th>Significado</th>
+                                <th>Diferencia con países hispanos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Högerregeln (Prioridad a la derecha)</strong></td>
+                                <td>Ceder el paso en intersecciones no señalizadas a los vehículos que vienen por la derecha.</td>
+                                <td>En muchos países hispanos, la prioridad la tiene el vehículo que circula por la vía principal.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Parkeringsskiva (Disco de estacionamiento)</strong></td>
+                                <td>Obligación de colocar un disco que indica la hora de llegada para poder estacionar durante un tiempo limitado.</td>
+                                <td>Sistema menos común o con diferente implementación en muchos países de habla hispana.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vinterdäck (Neumáticos de invierno)</strong></td>
+                                <td>Obligatoriedad de uso en condiciones invernales durante periodos legales definidos.</td>
+                                <td>Es una especificidad climática nórdica. En la mayoría de países hispanos no existe esta obligatoriedad por ley.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+                
+                <article id="cap2-3">
+                    <h3>2.3 Señales temporales y obras viales</h3>
+                    <p>Suecia utiliza un sistema estandarizado y muy reflectante para la señalización en zonas de obras (Arbetsplats). Es crucial prestar especial atención y reducir la velocidad en estas áreas.</p>
+                    
+                    <ul>
+                        <li><strong>"Arbetsplats" (Zona de trabajo):</strong> Se anuncia con señales de advertencia de hombre trabajando (Varning för arbete på vägen).</li>
+                        <li><strong>"Förbud att köra om" (Prohibido adelantar):</strong> Es muy común en tramos de obras donde la calzada se estrecha.</li>
+                        <li><strong>"Körfältsändring" (Cambio de carril):</strong> Las marcas viales y los conos (koner) guían al conductor para cambiar de carril de forma segura.</li>
+                        <li><strong>Límites de velocidad reducidos:</strong> Las obras suelen tener límites de velocidad estrictos (por ejemplo, 30, 40 o 50 km/h).</li>
+                    </ul>
+                    
+                    <div class="info-box">
+                        <p><strong>Recuerda:</strong> La señalización temporal tiene prioridad sobre la señalización permanente. Siempre debes seguir las instrucciones de los semáforos, las señales variables y el personal de la obra.</p>
+                    </div>
+                </article>
+            </section>
+            
+            <!-- Los demás capítulos seguirían aquí -->
+            
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="scrollToChapter('cap1')">Anterior</button>
+                <button class="nav-btn" onclick="scrollToChapter('cap3')">Siguiente</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+        
+        function scrollToChapter(chapterId) {
+            document.getElementById(chapterId).scrollIntoView({behavior: 'smooth'});
+        }
+        
+        // Cerrar sidebar al hacer clic en un enlace (en dispositivos móviles)
+        if (window.innerWidth < 992) {
+            document.querySelectorAll('.chapters-list a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('sidebar').classList.remove('active');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
